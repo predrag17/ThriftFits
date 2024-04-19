@@ -8,8 +8,9 @@ import lombok.*;
 @AllArgsConstructor
 public class RegisterRequest {
 
-    private String firstName;
-    private String lastName;
+    private String fullName;
+    private String instagramUsername;
+    private String phone;
     private String email;
     private String username;
     private String password;

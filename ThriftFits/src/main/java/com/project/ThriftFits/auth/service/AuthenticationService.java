@@ -3,6 +3,7 @@ package com.project.ThriftFits.auth.service;
 import com.project.ThriftFits.auth.model.AuthenticationResponse;
 import com.project.ThriftFits.model.DTO.AuthenticationRequest;
 import com.project.ThriftFits.model.DTO.RegisterRequest;
+import com.project.ThriftFits.model.Favourite;
 import com.project.ThriftFits.model.User;
 import com.project.ThriftFits.model.enumeration.Role;
 import com.project.ThriftFits.repository.UserRepository;
@@ -24,12 +25,14 @@ public class AuthenticationService {
 
     public AuthenticationResponse register(RegisterRequest request) {
         User user = User.builder()
-                .firstName(request.getFirstName())
-                .lastName(request.getLastName())
+                .fullName(request.getFullName())
+                .instagramUsername(request.getInstagramUsername())
+                .phone(request.getPhone())
                 .email(request.getEmail())
                 .username(request.getUsername())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(Role.USER)
+                .favourite(new Favourite())
                 .build();
 
         userRepository.save(user);

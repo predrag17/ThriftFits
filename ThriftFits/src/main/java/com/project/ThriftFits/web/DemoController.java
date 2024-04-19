@@ -1,4 +1,4 @@
-package com.project.ThriftFits.controller;
+package com.project.ThriftFits.web;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
