@@ -21,4 +21,10 @@ public class Favourite {
 
     @OneToMany(mappedBy = "favourite")
     private List<Advertisement> advertisements;
+
+    private int quantity;
+
+    public Favourite(int quantity) {
+        this.quantity = 0;
+    }
 }

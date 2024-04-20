@@ -45,6 +45,9 @@ public class User implements UserDetails {
     @Enumerated(value = EnumType.STRING)
     private Role role;
 
+    @OneToMany(mappedBy = "user")
+    private List<Advertisement> advertisements;
+
     @OneToOne
     private Favourite favourite;
 
