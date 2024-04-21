@@ -19,7 +19,7 @@ public class Favourite {
     @GeneratedValue
     private Long id;
 
-    @OneToMany(mappedBy = "favourite")
+    @ManyToMany(mappedBy = "favourites")
     private List<Advertisement> advertisements;
 
     private int quantity;

@@ -48,7 +48,7 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user")
     private List<Advertisement> advertisements;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Favourite favourite;
 
     @Override

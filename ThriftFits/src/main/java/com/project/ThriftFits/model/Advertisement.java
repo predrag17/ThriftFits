@@ -8,6 +8,7 @@ import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -24,12 +25,11 @@ public class Advertisement {
     private String clothingName;
 
     @NotBlank
-    private String clothingSize;
-
-    @NotBlank
     private String clothingBrand;
 
     @NotBlank
+    private String clothingSize;
+
     private String clothingColor;
 
     private String description;
@@ -39,8 +39,13 @@ public class Advertisement {
     @ManyToOne
     private User user;
 
-    @ManyToOne
-    private Favourite favourite;
+    @ManyToMany
+    @JoinTable(
+            name = "favourite_ads",
+            joinColumns = @JoinColumn(name = "favourite_id"),
+            inverseJoinColumns = @JoinColumn(name = "ad_id")
+    )
+    private List<Favourite> favourites;
 
     public Advertisement(String clothingName, String clothingSize, String clothingBrand, String clothingColor, String description, LocalDate createdAt, User user) {
         this.clothingName = clothingName;
