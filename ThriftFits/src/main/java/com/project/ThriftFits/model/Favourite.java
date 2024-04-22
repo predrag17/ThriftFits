@@ -10,7 +10,6 @@ import java.util.List;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @Entity
 @Table(name = "favourite")
 public class Favourite {
@@ -24,7 +23,15 @@ public class Favourite {
 
     private int quantity;
 
-    public Favourite(int quantity) {
+    public Favourite() {
         this.quantity = 0;
+    }
+
+    @Override
+    public String toString() {
+        return "Favourite{" +
+                "id=" + id +
+                ", quantity=" + quantity +
+                '}';
     }
 }

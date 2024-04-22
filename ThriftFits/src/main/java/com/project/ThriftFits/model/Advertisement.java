@@ -1,13 +1,14 @@
 package com.project.ThriftFits.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -25,6 +26,9 @@ public class Advertisement {
     private String clothingName;
 
     @NotBlank
+    private String clothingType;
+
+    @NotBlank
     private String clothingBrand;
 
     @NotBlank
@@ -34,9 +38,10 @@ public class Advertisement {
 
     private String description;
 
-    private LocalDate createdAt;
+    private LocalDateTime createdAt;
 
     @ManyToOne
+    @JsonBackReference
     private User user;
 
     @ManyToMany
@@ -47,10 +52,11 @@ public class Advertisement {
     )
     private List<Favourite> favourites;
 
-    public Advertisement(String clothingName, String clothingSize, String clothingBrand, String clothingColor, String description, LocalDate createdAt, User user) {
+    public Advertisement(String clothingName, String clothingType, String clothingBrand, String clothingSize, String clothingColor, String description, LocalDateTime createdAt, User user) {
         this.clothingName = clothingName;
-        this.clothingSize = clothingSize;
+        this.clothingType = clothingType;
         this.clothingBrand = clothingBrand;
+        this.clothingSize = clothingSize;
         this.clothingColor = clothingColor;
         this.description = description;
         this.createdAt = createdAt;

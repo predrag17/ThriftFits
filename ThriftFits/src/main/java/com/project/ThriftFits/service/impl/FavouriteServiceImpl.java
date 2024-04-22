@@ -30,6 +30,7 @@ public class FavouriteServiceImpl implements FavouriteService {
                 .orElseThrow(InvalidFavouriteIdException::new);
 
         favourite.getAdvertisements().add(advertisement);
+        favourite.setQuantity(favourite.getQuantity() + 1);
 
         favouriteRepository.save(favourite);
     }

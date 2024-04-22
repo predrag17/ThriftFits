@@ -12,6 +12,7 @@ import lombok.Setter;
 public class AdvertisementDTO {
 
     private String clothingName;
+    private String clothingType;
     private String clothingBrand;
     private String clothingSize;
     private String clothingColor;

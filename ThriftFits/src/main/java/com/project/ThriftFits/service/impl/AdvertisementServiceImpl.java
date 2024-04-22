@@ -12,7 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -41,11 +41,12 @@ public class AdvertisementServiceImpl implements AdvertisementService {
 
         return advertisementRepository.save(new Advertisement(
                 adDTO.getClothingName(),
-                adDTO.getClothingSize(),
+                adDTO.getClothingType(),
                 adDTO.getClothingBrand(),
+                adDTO.getClothingSize(),
                 adDTO.getClothingColor(),
                 adDTO.getDescription(),
-                LocalDate.now(),
+                LocalDateTime.now(),
                 user
         ));
     }
@@ -55,6 +56,7 @@ public class AdvertisementServiceImpl implements AdvertisementService {
         Advertisement advertisement = getAdById(id);
 
         advertisement.setClothingName(adDTO.getClothingName());
+        advertisement.setClothingType(adDTO.getClothingType());
         advertisement.setClothingBrand(adDTO.getClothingBrand());
         advertisement.setClothingSize(adDTO.getClothingSize());
         advertisement.setClothingColor(adDTO.getClothingColor());
@@ -71,4 +73,25 @@ public class AdvertisementServiceImpl implements AdvertisementService {
 
         return advertisement;
     }
+
+    @Override
+    public List<Advertisement> getNewestAds() {
+        return advertisementRepository.findTop8ByOrderByCreatedAtDesc();
+    }
+
+    @Override
+    public List<Advertisement> filtered(String clothingName, String clothingBrand, String clothingType, String clothingSize, String clothingColor) {
+        if (clothingName == null && clothingBrand == null && clothingType == null && clothingSize == null && clothingColor == null) {
+            return getAllAds();
+        }
+
+        return advertisementRepository.findByClothingAttributes(
+                clothingName,
+                clothingBrand,
+                clothingType,
+                clothingSize,
+                clothingColor
+        );
+    }
+
 }

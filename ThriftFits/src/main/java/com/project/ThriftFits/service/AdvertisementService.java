@@ -16,4 +16,9 @@ public interface AdvertisementService {
     Advertisement updateAd(Long id, AdvertisementDTO adDTO);
 
     Advertisement deleteAd(Long id);
+
+    List<Advertisement> getNewestAds();
+
+
+    List<Advertisement> filtered(String clothingName, String clothingBrand, String clothingType, String clothingSize, String clothingColor);
 }
