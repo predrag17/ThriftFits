@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -25,7 +26,17 @@ public class SecurityConfiguration {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((request) -> request
-                        .requestMatchers("/api/auth/**")
+                        .requestMatchers(AntPathRequestMatcher.antMatcher("/api/auth/**"),
+                                AntPathRequestMatcher.antMatcher("/api/about"),
+                                AntPathRequestMatcher.antMatcher("/api/home"),
+                                AntPathRequestMatcher.antMatcher("/api/"),
+                                AntPathRequestMatcher.antMatcher("/api/ads"),
+                                AntPathRequestMatcher.antMatcher("/api/user/**"),
+                                AntPathRequestMatcher.antMatcher("/api/search"),
+                                AntPathRequestMatcher.antMatcher("/api/ads/filtered"),
+                                AntPathRequestMatcher.antMatcher("/api/ads/sorted"),
+                                AntPathRequestMatcher.antMatcher("/api/ads/{id}/details")
+                        )
                         .permitAll()
                         .anyRequest()
                         .authenticated()

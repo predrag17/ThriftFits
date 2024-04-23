@@ -21,4 +21,10 @@ public interface AdvertisementService {
 
 
     List<Advertisement> filtered(String clothingName, String clothingBrand, String clothingType, String clothingSize, String clothingColor);
+
+    List<Advertisement> loggedInUserAds();
+
+    List<Advertisement> sortAds(String sortOption);
+
+    List<Advertisement> searchAds(String searchText);
 }

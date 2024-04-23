@@ -36,7 +36,7 @@ public class AdvertisementController {
         return advertisementService.deleteAd(id);
     }
 
-    @PostMapping("{id}/details")
+    @GetMapping("{id}/details")
     public Advertisement detailsAd(@PathVariable Long id) {
         return advertisementService.getAdById(id);
     }
@@ -52,4 +52,13 @@ public class AdvertisementController {
         return advertisementService.filtered(clothingName, clothingBrand, clothingType, clothingSize, clothingColor);
     }
 
+    @PostMapping("/sorted")
+    public List<Advertisement> sortAds(@RequestParam String sortOption) {
+        return advertisementService.sortAds(sortOption);
+    }
+
+    @GetMapping("/myAds")
+    public List<Advertisement> getMyAds() {
+        return advertisementService.loggedInUserAds();
+    }
 }

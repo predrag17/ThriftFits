@@ -18,4 +18,10 @@ public interface AdvertisementRepository extends JpaRepository<Advertisement, Lo
             "AND (:clothingSize IS NULL OR lower(a.clothingSize) LIKE lower(concat('%', cast(:clothingSize as string), '%'))) " +
             "AND (:clothingColor IS NULL OR lower(a.clothingColor) LIKE lower(concat('%', cast(:clothingColor as string), '%')))")
     List<Advertisement> findByClothingAttributes(String clothingName, String clothingBrand, String clothingType, String clothingSize, String clothingColor);
+
+    List<Advertisement> findAllByOrderByCreatedAtDesc();
+
+    List<Advertisement> findAllByOrderByCreatedAtAsc();
+
+    List<Advertisement> findByClothingNameContaining(String searchText);
 }

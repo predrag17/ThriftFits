@@ -5,6 +5,7 @@ import com.project.ThriftFits.model.DTO.AdvertisementDTO;
 import com.project.ThriftFits.model.User;
 import com.project.ThriftFits.model.exceptions.InvalidAdIdException;
 import com.project.ThriftFits.repository.AdvertisementRepository;
+import com.project.ThriftFits.repository.UserRepository;
 import com.project.ThriftFits.service.AdvertisementService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -21,6 +23,7 @@ public class AdvertisementServiceImpl implements AdvertisementService {
 
     private final AdvertisementRepository advertisementRepository;
     private final UserDetailsService userDetailsService;
+    private final UserRepository userRepository;
 
     @Override
     public List<Advertisement> getAllAds() {
@@ -92,6 +95,36 @@ public class AdvertisementServiceImpl implements AdvertisementService {
                 clothingSize,
                 clothingColor
         );
+    }
+
+    @Override
+    public List<Advertisement> loggedInUserAds() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+        User user = (User) userDetailsService.loadUserByUsername(username);
+
+        return user.getAdvertisements();
+    }
+
+    @Override
+    public List<Advertisement> sortAds(String sortOption) {
+        if (sortOption.equals("newest")) {
+            return advertisementRepository.findAllByOrderByCreatedAtDesc();
+        }
+
+        return advertisementRepository.findAllByOrderByCreatedAtAsc();
+    }
+
+    @Override
+    public List<Advertisement> searchAds(String searchText) {
+        User user = userRepository.findByUsernameIsContainingIgnoreCase(searchText);
+
+        if (user != null) {
+            return user.getAdvertisements();
+        }
+
+        return advertisementRepository.findByClothingNameContaining(searchText);
     }
 
 }
