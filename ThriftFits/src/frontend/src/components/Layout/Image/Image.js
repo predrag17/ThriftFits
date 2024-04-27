@@ -1,5 +1,7 @@
 import React from 'react'
 import HomeImage from "../../../assets/home.png";
+import '../../../index.css'
+import "bootstrap/dist/css/bootstrap.min.css"
 
 function Image() {
     return (

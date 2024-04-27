@@ -1,0 +1,23 @@
+.contacts {
+    margin-top: 25px;
+}
+
+.contacts p {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.socialNetworks h2 {
+    margin-top: 10px;
+}
+
+.links {
+    display: flex;
+    justify-content: space-between;
+    width: 150px;
+    margin-left: 10px;
+}
+
+.aboutSection {
+    margin-right: 10px;
+}

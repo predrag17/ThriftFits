@@ -4,7 +4,7 @@ import AdCard from "../AdCard/AdCard";
 
 function Newest() {
     return (
-        <div className="container-fluid d-flex flex-column align-items-center justify-content-center" style={{marginTop: "50px", paddingLeft: "0", paddingRight: "0"}}>
+        <div className="container-fluid d-flex flex-column align-items-center justify-content-center" style={{marginTop: "50px", marginBottom: "50px", paddingLeft: "0", paddingRight: "0"}}>
             <div>
                 <h1 style={{fontWeight: "bold"}}>Newest Ads that maybe you are interested in!</h1>
             </div>

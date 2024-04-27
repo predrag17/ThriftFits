@@ -1,0 +1,15 @@
+.button {
+    border: none;
+    background-color: #001970;
+    opacity: 58%;
+    color: #FFFFFF;
+    font-size: 20px;
+    padding: 10px 200px;
+    font-family: Spartan, serif;
+    transition: transform 0.7s ease-in-out, opacity 0.4s ease-in-out;
+}
+
+.button:hover {
+    transform: scale(1.05);
+    opacity: 80%;
+}
