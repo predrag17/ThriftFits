@@ -7,10 +7,17 @@
 }
 
 li {
-    font-size: 25px;
+    font-size: 20px;
 }
 
 .nav-item-1 {
-    margin: 0 100px;
+    margin-right: 20px;
+    margin-left: 20px;
 }
+
+ul {
+    margin-right: 20px;
+}
+
+
 

@@ -7,8 +7,8 @@ import Logo from '../../../assets/Logo.png'
 function NavBar() {
 
     return (
-        <nav className="navbar">
-            <div className="container-fluid d-flex flex-wrap justify-content-between align-items-center ">
+        <nav className="navbar navbar-expand-lg navbar-light fixed-top shadow-lg">
+            <div className="container-fluid d-flex align-items-center">
                 <div style={{flex: "0 0 auto"}}>
                     <a className="navbar-brand" href={"/"}>
                         <img src={Logo} alt="AppLogo"/>
@@ -16,28 +16,11 @@ function NavBar() {
 
                 </div>
 
-                <div className="flex-grow-1">
-                    <ul className="navbar-nav d-flex flex-row justify-content-center">
-                        <li className="nav-item">
-                            <a className="nav-link" href={"/home"}>Home<span className="sr-only"></span></a>
-                        </li>
-                        <li className="nav-item-1">
-                            <a className="nav-link" href="#">Ads</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">
-                                About
-                            </a>
-                        </li>
-                    </ul>
-
-
-                </div>
-
-                <div className="d-flex align-items-center justify-content-center" style={{marginRight: "20px"}}>
-                    <div className="input-group mr-3" style={{position: "relative", marginRight: "25px"}}>
+                <div className="d-flex align-items-center justify-content-center">
+                    <div className="input-group mr-3" style={{position: "relative"}}>
                         <input type="text" className="form-control" placeholder="Search" aria-label="Search"
-                               aria-describedby="button-addon2" style={{zIndex: 1}}/>
+                               aria-describedby="button-addon2"
+                               style={{zIndex: 1, padding: "0.5rem 15rem 0.5rem 1rem"}}/>
 
                         <button className="btn" type="button" id="button-addon2"
                                 style={{position: "absolute", right: 0, top: 0, bottom: 0, zIndex: 2}}>
@@ -49,14 +32,38 @@ function NavBar() {
                         </button>
                     </div>
 
+                </div>
+
+                <div className="d-flex flex-row align-items-center justify-content-center" style={{marginRight: "20"}}>
+                    <div className="navbar">
+                        <ul className="navbar-nav d-flex flex-row" id="unordered">
+                            <li className="nav-item">
+                                <a className="nav-link" href={"/home"}>Home<span className="sr-only"></span></a>
+                            </li>
+                            <li className="nav-item-1">
+                                <a className="nav-link" href="/ads">Ads</a>
+                            </li>
+                            <li className="nav-item">
+                                <a className="nav-link" href="/about">
+                                    About
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+
                     <div>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
-                             className="bi bi-person" viewBox="0 0 16 16">
-                            <path
-                                d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
-                        </svg>
+                        <button style={{border: "none", backgroundColor: "#E3E6F3"}}>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                                 className="bi bi-person" viewBox="0 0 16 16">
+                                <path
+                                    d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
+                            </svg>
+                        </button>
+
                     </div>
                 </div>
+
 
             </div>
         </nav>
