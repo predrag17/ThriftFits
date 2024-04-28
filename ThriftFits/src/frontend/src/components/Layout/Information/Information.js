@@ -7,7 +7,7 @@ import {Link} from "react-router-dom";
 
 function Infromation() {
     return (
-        <div className="container-fluid position-relative" style={{padding: "0", height: "450px", marginBottom: "50px"}}>
+        <div className="container-fluid position-relative" style={{padding: "0", height: "450px"}}>
             <img
                 src={InformationImage} // Placeholder image
                 alt="Banner"
@@ -17,7 +17,14 @@ function Infromation() {
 
             <div style={{width: "", margin: "auto"}}>
                 <div className="position-absolute top-50 start-50 translate-middle text-center">
-                    <p style={{fontWeight: "bold", fontSize: "50px", width: "100%", color: "black", opacity: "85%", fontFamily: "Spartan"}}>If you want to
+                    <p style={{
+                        fontWeight: "bold",
+                        fontSize: "50px",
+                        width: "100%",
+                        color: "black",
+                        opacity: "85%",
+                        fontFamily: "Spartan"
+                    }}>If you want to
                         know more about us click below!</p>
                     <Link to={"/about"}>
                         <button className="button">
