@@ -1,13 +1,13 @@
 import React from 'react'
 import NavBar from "../Layout/NavBar/NavBar";
 import Footer from "../Layout/Footer/Footer";
-import Main from "../Layout/MainPart/Main";
+import MainLogin from "../Layout/MainPart/Login/MainLogin";
 
 function Login() {
     return (
         <>
             <NavBar parentComponent="Login"/>
-            <Main/>
+            <MainLogin/>
             <Footer/>
         </>
     )

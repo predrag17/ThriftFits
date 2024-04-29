@@ -29,6 +29,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                                     @NonNull HttpServletResponse response,
                                     @NonNull FilterChain filterChain)
             throws ServletException, IOException {
+        System.out.println("Entered here");
         final String authHeader = request.getHeader("Authorization");
         final String jwtToken;
         final String username;

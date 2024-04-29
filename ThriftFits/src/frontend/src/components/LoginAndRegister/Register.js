@@ -1,14 +1,14 @@
 import React from 'react'
 import NavBar from "../Layout/NavBar/NavBar";
-import Main from "../Layout/MainPart/Main";
 import Footer from "../Layout/Footer/Footer";
+import MainRegister from "../Layout/MainPart/Register/MainRegister";
 
 function Register() {
 
     return (
         <>
             <NavBar parentComponent="Register"/>
-            <Main/>
+            <MainRegister/>
             <Footer/>
         </>
     )

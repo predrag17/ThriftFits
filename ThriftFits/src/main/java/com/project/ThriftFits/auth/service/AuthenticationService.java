@@ -12,9 +12,10 @@ import com.project.ThriftFits.service.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -24,12 +25,12 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
-    private final UserDetailsService userDetailsService;
+
 
     public AuthenticationResponse register(RegisterRequest request) {
-        User alreadyExist = (User) userDetailsService.loadUserByUsername(request.getUsername());
+        Optional<User> alreadyExist = userRepository.findByUsername(request.getUsername());
 
-        if (alreadyExist != null) {
+        if (alreadyExist.isPresent()) {
             throw new UserAlreadyExistException("User with that username already exist");
         }
 
