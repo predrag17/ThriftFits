@@ -43,7 +43,7 @@ function NavBar({parentComponent}) {
 
     return (
         <nav className="navbar navbar-expand-lg navbar-light fixed-top shadow-lg">
-            <div className="container-fluid d-flex align-items-center">
+            <div className="container-fluid d-flex align-items-center justify-content-between">
                 <div style={{flex: "0 0 auto"}}>
                     <a className="navbar-brand" href={"/"}>
                         <img src={Logo} alt="AppLogo"/>
@@ -52,11 +52,11 @@ function NavBar({parentComponent}) {
                 </div>
 
                 {parentComponent !== "Login" && parentComponent !== "Register" && (
-                    <div className="d-flex align-items-center justify-content-center">
-                        <div className="input-group mr-3" style={{position: "relative"}}>
+                    <div className="d-flex">
+                        <div className="input-group" style={{position: "relative", width: "100%"}}>
                             <input type="text" className="form-control" placeholder="Search" aria-label="Search"
                                    aria-describedby="button-addon2"
-                                   style={{zIndex: 1, padding: "0.5rem 15rem 0.5rem 1rem"}}/>
+                                   style={{zIndex: 1, padding: "0.5rem 20rem 0.5rem 1rem"}}/>
 
                             <button className="btn" type="button" id="button-addon2"
                                     style={{position: "absolute", right: 0, top: 0, bottom: 0, zIndex: 2}}>
@@ -72,7 +72,8 @@ function NavBar({parentComponent}) {
 
                 )}
 
-                <div className="d-flex flex-row align-items-center justify-content-center" style={{marginRight: "20"}}>
+                <div className="d-flex flex-row align-items-center justify-content-center"
+                     style={{marginRight: "10px"}}>
                     <div className="navbar">
                         <ul className="navbar-nav d-flex flex-row" id="unordered">
                             <li className="nav-item">
@@ -110,7 +111,7 @@ function NavBar({parentComponent}) {
                             </Link>
                         </div>
                     ) : (
-                        <div className="d-flex">
+                        <div className="d-flex" style={{marginRight: "10px"}}>
                             <button
                                 onClick={handleLogout}
                                 style={{
@@ -118,10 +119,12 @@ function NavBar({parentComponent}) {
                                     backgroundColor: "#E3E6F3",
                                     transition: "transform 0.4s",
                                     textDecoration: "none",
+                                    position: "relative",
                                     cursor: "pointer"
                                 }}
                                 onMouseEnter={(e) => {
                                     e.currentTarget.style.transform = "scale(1.2)";
+                                    e.currentTarget.style.transformOrigin = "top center"
                                 }}
 
                                 onMouseLeave={(e) => {
@@ -136,11 +139,11 @@ function NavBar({parentComponent}) {
 
                     {parentComponent !== "Login" && parentComponent !== "Register" && token !== null &&
                         (
-                            <>
+                            <div>
                                 <ul className="nav-menu">
                                     <li className="nav-items">
                                         <a className="nav-link" href={"/add"}>
-                                            Add
+                                            Add Ad
                                             <span
                                                 className="sr-only"></span></a>
                                     </li>
@@ -165,7 +168,8 @@ function NavBar({parentComponent}) {
                                     <span className="bar"></span>
                                     <span className="bar"></span>
                                 </div>
-                            </>
+                            </div>
+
                         )
                     }
                 </div>
