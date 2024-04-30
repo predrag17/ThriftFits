@@ -1,11 +1,45 @@
-import React from "react"
+import React, {useEffect, useState} from "react"
 import "bootstrap/dist/css/bootstrap.min.css"
 import '../../../index.css'
 import './navbar.css'
 import Logo from '../../../assets/Logo.png'
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+import {jwtDecode} from "jwt-decode";
 
 function NavBar({parentComponent}) {
+    const [token, setToken] = useState(null);
+    const [username, setUsername] = useState(null);
+    const history = useNavigate()
+
+    useEffect(() => {
+        const storedToken = localStorage.getItem("token");
+        if (storedToken) {
+            try {
+                const decodedToken = jwtDecode(storedToken);
+                setUsername(decodedToken.sub);
+                setToken(storedToken);
+            } catch (error) {
+                console.error("Invalid token:", error.message);
+                localStorage.removeItem("token");
+            }
+        }
+
+    }, []);
+
+
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        history("/login")
+    }
+
+    const toggleHamburger = () => {
+        const hamburger = document.querySelector(".hamburger");
+        const navMenu = document.querySelector(".nav-menu");
+        hamburger.classList.toggle("active");
+        navMenu.classList.toggle("active");
+
+    };
+
 
     return (
         <nav className="navbar navbar-expand-lg navbar-light fixed-top shadow-lg">
@@ -55,10 +89,18 @@ function NavBar({parentComponent}) {
                         </ul>
                     </div>
 
-                    {parentComponent !== "Login" && (
+                    {parentComponent !== "Login" && token === null ? (
                         <div>
                             <Link to={"/login"}>
-                                <button style={{border: "none", backgroundColor: "#E3E6F3"}}>
+                                <button style={{
+                                    border: "none",
+                                    backgroundColor: "#E3E6F3",
+                                    transition: "transform 0.4s"
+                                }}
+                                        onMouseEnter={(e) =>
+                                            e.currentTarget.style.transform = "scale(1.5)"}
+                                        onMouseLeave={(e) =>
+                                            e.currentTarget.style.transform = "scale(1)"}>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
                                          className="bi bi-person" viewBox="0 0 16 16">
                                         <path
@@ -67,7 +109,65 @@ function NavBar({parentComponent}) {
                                 </button>
                             </Link>
                         </div>
+                    ) : (
+                        <div className="d-flex">
+                            <button
+                                onClick={handleLogout}
+                                style={{
+                                    border: "none",
+                                    backgroundColor: "#E3E6F3",
+                                    transition: "transform 0.4s",
+                                    textDecoration: "none",
+                                    cursor: "pointer"
+                                }}
+                                onMouseEnter={(e) => {
+                                    e.currentTarget.style.transform = "scale(1.2)";
+                                }}
+
+                                onMouseLeave={(e) => {
+                                    e.currentTarget.style.transform = "scale(1)";
+                                }}
+                            >
+                                <span
+                                    style={{fontSize: "18px", fontWeight: "bold"}}>{username}</span>
+                            </button>
+                        </div>
                     )}
+
+                    {parentComponent !== "Login" && parentComponent !== "Register" && token !== null &&
+                        (
+                            <>
+                                <ul className="nav-menu">
+                                    <li className="nav-items">
+                                        <a className="nav-link" href={"/add"}>
+                                            Add
+                                            <span
+                                                className="sr-only"></span></a>
+                                    </li>
+                                    <li className="nav-items">
+                                        <a className="nav-link" href={"/myAds"}>
+                                            My Ads
+                                            <span
+                                                className="sr-only"></span></a>
+                                    </li>
+                                    <li className="nav-items">
+                                        <a className="nav-link" href={"/myFavourites"}>
+                                            Favourites
+                                            <span
+                                                className="sr-only"></span></a>
+                                    </li>
+                                </ul>
+
+                                <div className="hamburger"
+                                     onClick={toggleHamburger}
+                                >
+                                    <span className="bar"></span>
+                                    <span className="bar"></span>
+                                    <span className="bar"></span>
+                                </div>
+                            </>
+                        )
+                    }
                 </div>
 
 

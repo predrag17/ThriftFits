@@ -72,7 +72,7 @@ function Footer() {
                         </li>
 
                         <li>
-                            <Link to={"/favourites"}
+                            <Link to={"/myFavourites"}
                                   style={{textDecoration: "none", color: "black", fontWeight: "bold"}}>
                                 <p>Favourites</p>
                             </Link>

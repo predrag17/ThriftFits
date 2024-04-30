@@ -15,6 +15,25 @@ function MainRegister() {
         username: '',
         password: ''
     })
+    const [showNotification, setShowNotification] = useState({
+        instagram: false,
+        phone: false
+    });
+    const [error, setError] = useState("");
+
+    const handleFocus = (field) => {
+        setShowNotification({
+            ...showNotification,
+            [field]: true
+        });
+    };
+
+    const handleBlur = (field) => {
+        setShowNotification({
+            ...showNotification,
+            [field]: false
+        });
+    };
 
     const handleChange = (e) => {
         setFormData({
@@ -34,10 +53,13 @@ function MainRegister() {
             })
             .catch(error => {
                 console.error("Error: ", error);
+                setError("User with that username or email already exists!");
+
+                setTimeout(() => {
+                    setError('');
+                }, 10000);
             })
-
     }
-
 
     return (
         <div className="container-fluid position-relative"
@@ -57,124 +79,146 @@ function MainRegister() {
                     <h1 className="text-center pt-4" style={{fontWeight: "bold", fontSize: "50px"}}>Register</h1>
 
                     <div className="container-fluid d-flex justify-content-center align-items-center">
-                        <form
-                            onSubmit={handleSubmit}
-                            style={{
-                                marginTop: "60px",
-                                marginBottom: "100px"
-                            }}
-                        >
-                            <div className="form-group">
-                                <input type="text"
-                                       className="form-control" id="exampleInputFullname"
-                                       name="fullName"
-                                       placeholder="Fullname"
-                                       value={formData.fullName}
-                                       onChange={handleChange}
-                                       required
-                                       style={{
-                                           marginBottom: "40px",
-                                           padding: "15px",
-                                           width: "300px",
-                                       }}
-                                />
-                            </div>
-                            <div className="form-group">
-                                <input type="text"
-                                       className="form-control" id="exampleInputInstagram"
-                                       name="instagramUsername"
-                                       placeholder="Instagram Username"
-                                       value={formData.instagramUsername}
-                                       onChange={handleChange}
-                                       style={{
-                                           marginBottom: "40px",
-                                           padding: "15px",
-                                           width: "300px"
-                                       }}
-                                />
-                            </div>
+                        <div style={{width: "400px"}}>
+                            <form
+                                onSubmit={handleSubmit}
+                                style={{
+                                    marginTop: "60px",
+                                    marginBottom: "100px"
+                                }}
+                            >
 
-                            <div className="form-group">
-                                <input type="text" className="form-control" id="exampleInputPhone"
-                                       placeholder="Phone number"
-                                       name="phone"
-                                       value={formData.phone}
-                                       onChange={handleChange}
-                                       style={{
-                                           marginBottom: "40px",
-                                           padding: "15px",
-                                           width: "300px"
-                                       }}
-                                />
-                            </div>
+                                <div style={{textAlign: 'center'}}>
+                                    {error && <p style={{color: 'red', fontSize: "18px", fontWeight: "bold"}}>
+                                        {error}
+                                    </p>}
+                                </div>
 
-                            <div className="form-group">
-                                <input type="email" className="form-control" id="exampleInputEmail"
-                                       placeholder="Email"
-                                       name="email"
-                                       value={formData.email}
-                                       onChange={handleChange}
-                                       required
-                                       style={{
-                                           marginBottom: "40px",
-                                           padding: "15px",
-                                           width: "300px"
-                                       }}
-                                />
-                            </div>
+                                <div className="form-group">
+                                    <input type="text"
+                                           className="form-control" id="exampleInputFullname"
+                                           name="fullName"
+                                           placeholder="Fullname"
+                                           value={formData.fullName}
+                                           onChange={handleChange}
+                                           required
+                                           style={{
+                                               marginBottom: "40px",
+                                               padding: "15px",
+                                               width: "100%",
 
-                            <div className="form-group">
-                                <input type="text" className="form-control" id="exampleInputPassword"
-                                       placeholder="Username"
-                                       name="username"
-                                       value={formData.username}
-                                       onChange={handleChange}
-                                       required
-                                       style={{
-                                           marginBottom: "40px",
-                                           padding: "15px",
-                                           width: "300px"
-                                       }}
-                                />
-                            </div>
+                                           }}
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    {showNotification.instagram && (
+                                        <small style={{color: "gray", fontSize: "17px"}}>This field is not
+                                            required</small>
+                                    )}
+                                    <input type="text"
+                                           className="form-control" id="exampleInputInstagram"
+                                           name="instagramUsername"
+                                           placeholder="Instagram Username"
+                                           value={formData.instagramUsername}
+                                           onFocus={() => handleFocus("instagram")}
+                                           onBlur={() => handleBlur("instagram")}
+                                           onChange={handleChange}
+                                           style={{
+                                               marginBottom: "40px",
+                                               padding: "15px",
+                                               width: "100%"
+                                           }}
+                                    />
+                                </div>
 
-                            <div className="form-group">
-                                <input type="password" className="form-control" id="exampleInputPassword1"
-                                       placeholder="Password"
-                                       name="password"
-                                       value={formData.password}
-                                       onChange={handleChange}
-                                       style={{
-                                           marginBottom: "40px",
-                                           padding: "15px",
-                                           width: "300px"
-                                       }}
-                                />
-                            </div>
-                            <button type="submit" className="btn btn-primary d-block mx-auto"
-                                    style={{
-                                        backgroundColor: "#4064FF",
-                                        width: "65%",
-                                        padding: "10px",
-                                        fontSize: "17px",
-                                        transition: "transform 0.3s, color 0.3s, font-weight 0.3s, box-shadow 0.3s",
-                                        boxShadow: "0px 4px 6px rgba(0, 0, 0, 0)"
-                                    }}
-                                    onMouseEnter={(e) => {
-                                        e.target.style.transform = "scale(1.05)";
-                                        e.target.style.color = "black";
-                                        e.target.style.fontWeight = "bold";
-                                        e.target.style.boxShadow = "0px 4px 6px rgba(0, 0, 0, 0.6)";
-                                    }}
-                                    onMouseLeave={(e) => {
-                                        e.target.style.transform = "scale(1)";
-                                        e.target.style.color = "";
-                                        e.target.style.fontWeight = "";
-                                        e.target.style.boxShadow = "0px 4px 6px rgba(0, 0, 0, 0)";
-                                    }}
-                            >Register
-                            </button>
-                        </form>
+                                <div className="form-group">
+                                    {showNotification.phone && (
+                                        <small style={{color: "gray", fontSize: "17px"}}>This field is not
+                                            required</small>
+                                    )}
+                                    <input type="text" className="form-control" id="exampleInputPhone"
+                                           placeholder="Phone number"
+                                           name="phone"
+                                           value={formData.phone}
+                                           onChange={handleChange}
+                                           onFocus={() => handleFocus("phone")}
+                                           onBlur={() => handleBlur("phone")}
+                                           style={{
+                                               marginBottom: "40px",
+                                               padding: "15px",
+                                               width: "100%"
+                                           }}
+                                    />
+                                </div>
+
+                                <div className="form-group">
+                                    <input type="email" className="form-control" id="exampleInputEmail"
+                                           placeholder="Email"
+                                           name="email"
+                                           value={formData.email}
+                                           onChange={handleChange}
+                                           required
+                                           style={{
+                                               marginBottom: "40px",
+                                               padding: "15px",
+                                               width: "100%"
+                                           }}
+                                    />
+                                </div>
+
+                                <div className="form-group">
+                                    <input type="text" className="form-control" id="exampleInputPassword"
+                                           placeholder="Username"
+                                           name="username"
+                                           value={formData.username}
+                                           onChange={handleChange}
+                                           required
+                                           style={{
+                                               marginBottom: "40px",
+                                               padding: "15px",
+                                               width: "100%"
+                                           }}
+                                    />
+                                </div>
+
+                                <div className="form-group">
+                                    <input type="password" className="form-control" id="exampleInputPassword1"
+                                           placeholder="Password"
+                                           name="password"
+                                           value={formData.password}
+                                           onChange={handleChange}
+                                           style={{
+                                               marginBottom: "40px",
+                                               padding: "15px",
+                                               width: "100%"
+                                           }}
+                                    />
+                                </div>
+                                <button type="submit" className="btn btn-primary d-block mx-auto"
+                                        style={{
+                                            backgroundColor: "#4064FF",
+                                            width: "65%",
+                                            padding: "10px",
+                                            fontSize: "17px",
+                                            transition: "transform 0.3s, color 0.3s, font-weight 0.3s, box-shadow 0.3s",
+                                            boxShadow: "0px 4px 6px rgba(0, 0, 0, 0)"
+                                        }}
+                                        onMouseEnter={(e) => {
+                                            e.target["style"].transform = "scale(1.05)";
+                                            e.target["style"].color = "black";
+                                            e.target["style"].fontWeight = "bold";
+                                            e.target["style"].boxShadow = "0px 4px 6px rgba(0, 0, 0, 0.6)";
+                                        }}
+                                        onMouseLeave={(e) => {
+                                            e.target["style"].transform = "scale(1)";
+                                            e.target["style"].color = "";
+                                            e.target["style"].fontWeight = "";
+                                            e.target["style"].boxShadow = "0px 4px 6px rgba(0, 0, 0, 0)";
+                                        }}
+                                >Register
+                                </button>
+                            </form>
+                        </div>
                     </div>
 
                     <div className="d-flex flex-column justify-content-center align-items-center">
@@ -194,16 +238,16 @@ function MainRegister() {
                                         boxShadow: "0px 4px 6px rgba(0, 0, 0, 0)"
                                     }}
                                     onMouseEnter={(e) => {
-                                        e.target.style.transform = "scale(1.05)";
-                                        e.target.style.color = "black";
-                                        e.target.style.fontWeight = "bold";
-                                        e.target.style.boxShadow = "0px 4px 6px rgba(0, 0, 0, 0.6)";
+                                        e.target["style"].transform = "scale(1.05)";
+                                        e.target["style"].color = "black";
+                                        e.target["style"].fontWeight = "bold";
+                                        e.target["style"].boxShadow = "0px 4px 6px rgba(0, 0, 0, 0.6)";
                                     }}
                                     onMouseLeave={(e) => {
-                                        e.target.style.transform = "scale(1)";
-                                        e.target.style.color = "";
-                                        e.target.style.fontWeight = "";
-                                        e.target.style.boxShadow = "0px 4px 6px rgba(0, 0, 0, 0)";
+                                        e.target["style"].transform = "scale(1)";
+                                        e.target["style"].color = "";
+                                        e.target["style"].fontWeight = "";
+                                        e.target["style"].boxShadow = "0px 4px 6px rgba(0, 0, 0, 0)";
                                     }}
                             >Login!
                             </button>

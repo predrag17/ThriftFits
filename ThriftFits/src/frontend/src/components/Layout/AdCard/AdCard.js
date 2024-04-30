@@ -16,7 +16,7 @@ function AdCard() {
                     </div>
 
                     <div className="card-body">
-                        <h5 className="card-title text-center">Cartoon Astrounaut T-Shirt</h5>
+                        <h5 className="card-title text-center" style={{fontWeight: "bold"}}>Cartoon Astrounaut T-Shirt</h5>
                         <p className="text-center">sterjoskipredragit@gmail.com</p>
                     </div>
 

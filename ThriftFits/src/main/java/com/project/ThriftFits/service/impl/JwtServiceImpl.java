@@ -42,6 +42,7 @@ public class JwtServiceImpl implements JwtService {
             UserDetails userDetails
     ) {
         Date issuedDate = new Date();
+        System.out.println(issuedDate);
         Date expirationDate = new Date(issuedDate.getTime() + (EXPIRATION_TIME));
 
         return Jwts.builder()

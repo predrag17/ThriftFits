@@ -28,11 +28,12 @@ public class AuthenticationService {
 
 
     public AuthenticationResponse register(RegisterRequest request) {
-        Optional<User> alreadyExist = userRepository.findByUsername(request.getUsername());
+        Optional<User> alreadyExist = userRepository.findByUsernameOrEmail(request.getUsername(), request.getEmail());
 
         if (alreadyExist.isPresent()) {
-            throw new UserAlreadyExistException("User with that username already exist");
+            throw new UserAlreadyExistException("User with that username or email already exist");
         }
+
 
         User user = User.builder()
                 .fullName(request.getFullName())
