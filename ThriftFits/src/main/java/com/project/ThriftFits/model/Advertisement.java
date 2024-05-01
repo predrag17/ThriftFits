@@ -31,9 +31,9 @@ public class Advertisement {
     @NotBlank
     private String clothingBrand;
 
-    @NotBlank
     private String clothingSize;
 
+    @NotBlank
     private String clothingColor;
 
     private String description;

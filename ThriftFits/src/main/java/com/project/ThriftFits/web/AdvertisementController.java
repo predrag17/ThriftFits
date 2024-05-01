@@ -5,6 +5,7 @@ import com.project.ThriftFits.model.Advertisement;
 import com.project.ThriftFits.model.DTO.AdvertisementDTO;
 import com.project.ThriftFits.service.AdvertisementService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,48 +19,54 @@ public class AdvertisementController {
     private final AdvertisementService advertisementService;
 
     @GetMapping
-    public List<Advertisement> listAllAds() {
-        return advertisementService.getAllAds();
+    public ResponseEntity<List<Advertisement>> listAllAds() {
+        return ResponseEntity.ok(advertisementService.getAllAds());
     }
 
     @PostMapping("/add")
-    public Advertisement createAd(@RequestBody AdvertisementDTO adDTO) {
-        return advertisementService.createAd(adDTO);
+    public ResponseEntity<Advertisement> createAd(@RequestBody AdvertisementDTO adDTO) {
+        return ResponseEntity.ok(advertisementService.createAd(adDTO));
     }
 
     @PutMapping("{id}/edit")
-    public Advertisement updateAd(@PathVariable Long id, @RequestBody AdvertisementDTO advertisementDTO) {
-        return advertisementService.updateAd(id, advertisementDTO);
+    public ResponseEntity<Advertisement> updateAd(@PathVariable Long id, @RequestBody AdvertisementDTO advertisementDTO) {
+        return ResponseEntity.ok(advertisementService.updateAd(id, advertisementDTO));
     }
 
     @DeleteMapping("{id}/delete")
-    public Advertisement deleteAd(@PathVariable Long id) {
-        return advertisementService.deleteAd(id);
+    public ResponseEntity<Advertisement> deleteAd(@PathVariable Long id) {
+        return ResponseEntity.ok(advertisementService.deleteAd(id));
     }
 
     @GetMapping("{id}/details")
-    public Advertisement detailsAd(@PathVariable Long id) {
-        return advertisementService.getAdById(id);
+    public ResponseEntity<Advertisement> detailsAd(@PathVariable Long id) {
+        return ResponseEntity.ok(advertisementService.getAdById(id));
     }
 
     @PostMapping("/filtered")
-    public List<Advertisement> filterAds(
+    public ResponseEntity<List<Advertisement>> filterAds(
             @RequestParam(required = false) String clothingName,
             @RequestParam(required = false) String clothingBrand,
             @RequestParam(required = false) String clothingType,
             @RequestParam(required = false) String clothingSize,
             @RequestParam(required = false) String clothingColor
     ) {
-        return advertisementService.filtered(clothingName, clothingBrand, clothingType, clothingSize, clothingColor);
+        return ResponseEntity.ok(
+                advertisementService.filtered(
+                        clothingName,
+                        clothingBrand,
+                        clothingType,
+                        clothingSize,
+                        clothingColor));
     }
 
     @PostMapping("/sorted")
-    public List<Advertisement> sortAds(@RequestParam String sortOption) {
-        return advertisementService.sortAds(sortOption);
+    public ResponseEntity<List<Advertisement>> sortAds(@RequestParam String sortOption) {
+        return ResponseEntity.ok(advertisementService.sortAds(sortOption));
     }
 
     @GetMapping("/myAds")
-    public List<Advertisement> getMyAds() {
-        return advertisementService.loggedInUserAds();
+    public ResponseEntity<List<Advertisement>> getMyAds() {
+        return ResponseEntity.ok(advertisementService.loggedInUserAds());
     }
 }

@@ -5,7 +5,6 @@ import '../main.css'
 import '../../../../index.css'
 import {Link, useNavigate} from "react-router-dom";
 import Service from "../../../../repository/Service";
-import axios from "axios";
 
 function MainLogin() {
 
@@ -25,11 +24,11 @@ function MainLogin() {
 
     const handleSubmit = (e) => {
         e.preventDefault()
+        console.log(formData)
         Service.loginUser(formData)
             .then(response => {
                 console.log("User successfully logged in: ", response.data)
                 localStorage.setItem("token", response.data.token)
-                axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
 
                 history("/home")
             })

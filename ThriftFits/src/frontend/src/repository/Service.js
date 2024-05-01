@@ -1,4 +1,4 @@
-import axios from '../custom-axios/axios.js'
+import axios from '../custom-axios/axios'
 
 const Service = {
     registerUser: (data) => {
@@ -7,6 +7,10 @@ const Service = {
 
     loginUser: (data) => {
         return axios.post("/auth/authenticate", data)
+    },
+
+    addAd: (data) => {
+        return axios.post("/ads/add", data);
     }
 }
 
