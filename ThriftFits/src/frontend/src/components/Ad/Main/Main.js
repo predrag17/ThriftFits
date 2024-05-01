@@ -6,7 +6,7 @@ import {useNavigate} from "react-router-dom";
 
 function Main() {
 
-    const history = useNavigate()
+    const history = useNavigate();
     const [imageSrc, setImageSrc] = useState(null);
     const [selectedClothing, setSelectedClothing] = useState("");
     const [showSizeInput, setShowSizeInput] = useState(false);
@@ -59,7 +59,7 @@ function Main() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(formData)
+
         Service.addAd(formData)
             .then(response => {
                 console.log("Successfully added Ad: ", response.data);
@@ -83,7 +83,7 @@ function Main() {
                         <div className="container-fluid">
                             <div className="form-group d-flex flex-column align-items-center justify-content-around"
                                  style={{height: "500px"}}>
-                                {/*<input type="file" id="uploadInput" accept="image/*" onChange={handleFileSelect}/>*/}
+                                <input type="file" id="uploadInput" accept="image/*" onChange={handleFileSelect}/>
                                 {imageSrc ? (
                                     <label htmlFor="uploadInput">
                                         <img

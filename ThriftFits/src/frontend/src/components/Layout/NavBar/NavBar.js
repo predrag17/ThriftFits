@@ -12,7 +12,7 @@ function NavBar({parentComponent}) {
     const history = useNavigate()
 
     useEffect(() => {
-        const storedToken = localStorage.getItem("token");
+        const storedToken = localStorage.getItem("JWT");
         if (storedToken) {
             try {
                 const decodedToken = jwtDecode(storedToken);
@@ -20,7 +20,7 @@ function NavBar({parentComponent}) {
                 setToken(storedToken);
             } catch (error) {
                 console.error("Invalid token:", error.message);
-                localStorage.removeItem("token");
+                localStorage.removeItem("JWT");
             }
         }
 
@@ -28,7 +28,7 @@ function NavBar({parentComponent}) {
 
 
     const handleLogout = () => {
-        localStorage.removeItem("token");
+        localStorage.removeItem("JWT");
         history("/login")
     }
 

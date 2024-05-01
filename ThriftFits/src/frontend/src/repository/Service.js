@@ -10,6 +10,7 @@ const Service = {
     },
 
     addAd: (data) => {
+
         return axios.post("/ads/add", data);
     }
 }

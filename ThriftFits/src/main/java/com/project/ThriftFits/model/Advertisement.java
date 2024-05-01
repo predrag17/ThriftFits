@@ -38,6 +38,9 @@ public class Advertisement {
 
     private String description;
 
+    @Lob
+    private byte[] imageData;
+
     private LocalDateTime createdAt;
 
     @ManyToOne

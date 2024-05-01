@@ -28,7 +28,7 @@ function MainLogin() {
         Service.loginUser(formData)
             .then(response => {
                 console.log("User successfully logged in: ", response.data)
-                localStorage.setItem("token", response.data.token)
+                localStorage.setItem("JWT", response.data.token)
 
                 history("/home")
             })
