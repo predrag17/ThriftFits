@@ -12,6 +12,18 @@ const Service = {
     addAd: (data) => {
 
         return axios.post("/ads/add", data);
+    },
+
+    fetchAllAds: () => {
+        return axios.get("/ads");
+    },
+
+    fetchMyAds: () => {
+        return axios.get("/ads/myAds");
+    },
+
+    fetchImageById: (id) => {
+        return axios.get(`/img/${id}/details`);
     }
 }
 

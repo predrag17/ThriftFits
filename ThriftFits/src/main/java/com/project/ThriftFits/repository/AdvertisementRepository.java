@@ -1,6 +1,7 @@
 package com.project.ThriftFits.repository;
 
 import com.project.ThriftFits.model.Advertisement;
+import com.project.ThriftFits.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -24,4 +25,6 @@ public interface AdvertisementRepository extends JpaRepository<Advertisement, Lo
     List<Advertisement> findAllByOrderByCreatedAtAsc();
 
     List<Advertisement> findByClothingNameContaining(String searchText);
+
+    List<Advertisement> findByUser(User user);
 }

@@ -26,7 +26,9 @@ public class SecurityConfiguration {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((request) -> request
-                        .requestMatchers(AntPathRequestMatcher.antMatcher("/api/auth/register"),
+                        .requestMatchers(
+                                AntPathRequestMatcher.antMatcher("/resources/static/images/**"),
+                                AntPathRequestMatcher.antMatcher("/api/auth/register"),
                                 AntPathRequestMatcher.antMatcher("/api/auth/authenticate"),
                                 AntPathRequestMatcher.antMatcher("/api/ads"),
                                 AntPathRequestMatcher.antMatcher("/api/user/**"),

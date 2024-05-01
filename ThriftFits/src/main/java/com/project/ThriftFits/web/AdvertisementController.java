@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -26,9 +27,25 @@ public class AdvertisementController {
 
     @PostMapping("/add")
     public ResponseEntity<Advertisement> createAd(
-            @RequestBody AdvertisementDTO adDTO
-    ) {
-        return ResponseEntity.ok(advertisementService.createAd(adDTO));
+            @RequestParam("clothingName") String clothingName,
+            @RequestParam("clothingBrand") String clothingBrand,
+            @RequestParam("clothingType") String clothingType,
+            @RequestParam(value = "clothingSize", required = false) String clothingSize,
+            @RequestParam("clothingColor") String clothingColor,
+            @RequestParam(value = "description", required = false) String description,
+            @RequestParam("image") MultipartFile image
+    ) throws IOException {
+
+
+        return ResponseEntity.ok(advertisementService.create(
+                clothingName,
+                clothingBrand,
+                clothingType,
+                clothingSize,
+                clothingColor,
+                description,
+                image
+        ));
     }
 
     @PutMapping("{id}/edit")

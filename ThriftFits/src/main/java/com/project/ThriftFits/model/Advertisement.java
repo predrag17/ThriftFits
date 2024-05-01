@@ -1,6 +1,8 @@
 package com.project.ThriftFits.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
@@ -38,13 +40,14 @@ public class Advertisement {
 
     private String description;
 
-    @Lob
-    private byte[] imageData;
-
     private LocalDateTime createdAt;
 
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private Image image;
+
     @ManyToOne
-    @JsonBackReference
+    @JsonIgnoreProperties("advertisements")
     private User user;
 
     @ManyToMany

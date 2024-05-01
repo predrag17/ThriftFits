@@ -17,7 +17,8 @@ function Main() {
         clothingType: '',
         clothingSize: '',
         clothingColor: '',
-        description: ''
+        description: '',
+        image: null
     })
 
     const handleFileSelect = (event) => {
@@ -30,6 +31,10 @@ function Main() {
 
         if (file) {
             reader.readAsDataURL(file);
+            setFormData({
+                ...formData,
+                image: file // Set image file
+            });
         } else
             setImageSrc(null);
     };
@@ -60,11 +65,16 @@ function Main() {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        Service.addAd(formData)
+        const formDataToSend = new FormData();
+        for (let key in formData) {
+            formDataToSend.append(key, formData[key]);
+        }
+
+        Service.addAd(formDataToSend)
             .then(response => {
                 console.log("Successfully added Ad: ", response.data);
 
-                history("/home")
+                history("/myAds")
             })
             .catch(error => {
                 console.error("Error: ", error);
@@ -83,7 +93,12 @@ function Main() {
                         <div className="container-fluid">
                             <div className="form-group d-flex flex-column align-items-center justify-content-around"
                                  style={{height: "500px"}}>
-                                <input type="file" id="uploadInput" accept="image/*" onChange={handleFileSelect}/>
+                                <input
+                                    type="file"
+                                    id="uploadInput"
+                                    accept="image/*"
+                                    name="image"
+                                    onChange={handleFileSelect}/>
                                 {imageSrc ? (
                                     <label htmlFor="uploadInput">
                                         <img

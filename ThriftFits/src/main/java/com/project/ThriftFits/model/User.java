@@ -1,5 +1,6 @@
 package com.project.ThriftFits.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.project.ThriftFits.model.enumeration.Role;
 import jakarta.persistence.*;
@@ -46,7 +47,7 @@ public class User implements UserDetails {
     private Role role;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
+    @JsonIgnoreProperties("user")
     private List<Advertisement> advertisements;
 
     @OneToOne(cascade = CascadeType.ALL)

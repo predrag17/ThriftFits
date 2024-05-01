@@ -2,9 +2,11 @@ package com.project.ThriftFits.service.impl;
 
 import com.project.ThriftFits.model.Advertisement;
 import com.project.ThriftFits.model.DTO.AdvertisementDTO;
+import com.project.ThriftFits.model.Image;
 import com.project.ThriftFits.model.User;
 import com.project.ThriftFits.model.exceptions.InvalidAdIdException;
 import com.project.ThriftFits.repository.AdvertisementRepository;
+import com.project.ThriftFits.repository.ImageRepository;
 import com.project.ThriftFits.repository.UserRepository;
 import com.project.ThriftFits.service.AdvertisementService;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +14,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -23,6 +30,7 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     private final AdvertisementRepository advertisementRepository;
     private final UserDetailsService userDetailsService;
     private final UserRepository userRepository;
+    private static final String UPLOAD_DIR = "src/main/resources/static/images/";
 
     @Override
     public List<Advertisement> getAllAds() {
@@ -32,25 +40,6 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     @Override
     public Advertisement getAdById(Long id) {
         return advertisementRepository.findById(id).orElseThrow(() -> new InvalidAdIdException(id));
-    }
-
-    @Override
-    public Advertisement createAd(AdvertisementDTO adDTO) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
-
-        User user = (User) userDetailsService.loadUserByUsername(username);
-
-        return advertisementRepository.save(new Advertisement(
-                adDTO.getClothingName(),
-                adDTO.getClothingType(),
-                adDTO.getClothingBrand(),
-                adDTO.getClothingSize(),
-                adDTO.getClothingColor(),
-                adDTO.getDescription(),
-                LocalDateTime.now(),
-                user
-        ));
     }
 
     @Override
@@ -124,6 +113,67 @@ public class AdvertisementServiceImpl implements AdvertisementService {
         }
 
         return advertisementRepository.findByClothingNameContaining(searchText);
+    }
+
+    @Override
+    public Advertisement create(
+            String clothingName,
+            String clothingBrand,
+            String clothingType,
+            String clothingSize,
+            String clothingColor,
+            String description,
+            MultipartFile image) throws IOException {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+        User user = (User) userDetailsService.loadUserByUsername(username);
+
+        String imageNewName = saveNameAsPng(image);
+        String path = uploadImage(image, imageNewName);
+
+        Image img = new Image();
+        img.setName(imageNewName);
+        img.setPath(path);
+
+        Advertisement advertisement = new Advertisement(
+                clothingName,
+                clothingType,
+                clothingBrand,
+                clothingSize,
+                clothingColor,
+                description,
+                LocalDateTime.now(),
+                user
+        );
+
+        advertisement.setImage(img);
+
+        advertisementRepository.save(advertisement);
+
+        return advertisement;
+    }
+
+    private String uploadImage(MultipartFile image, String imageNewName) {
+        try {
+            byte[] bytes = image.getBytes();
+            Path fileNameAndPath = Paths.get(UPLOAD_DIR, imageNewName);
+            Files.write(fileNameAndPath, bytes);
+            return fileNameAndPath.toString();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+
+    }
+
+    private String saveNameAsPng(MultipartFile image) {
+        if (image.getContentType().equals(".png")) {
+            return image.getOriginalFilename();
+        }
+
+        String originalName = image.getOriginalFilename();
+        return originalName.substring(0, originalName.lastIndexOf('.')) + ".png";
     }
 
 }
