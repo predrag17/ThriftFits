@@ -1,8 +1,8 @@
 package com.project.ThriftFits.service;
 
-import com.project.ThriftFits.model.Image;
+import org.springframework.core.io.Resource;
 
 public interface ImageService {
 
-    Image getImageById(Long id);
+    Resource getImageById(Long id);
 }

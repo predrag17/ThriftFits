@@ -63,6 +63,11 @@ public class AdvertisementController {
         return ResponseEntity.ok(advertisementService.getAdById(id));
     }
 
+    @GetMapping("/newest")
+    public ResponseEntity<List<Advertisement>> getNewestAds() {
+        return ResponseEntity.ok(advertisementService.getNewestAds());
+    }
+
     @PostMapping("/filtered")
     public ResponseEntity<List<Advertisement>> filterAds(
             @RequestParam(required = false) String clothingName,

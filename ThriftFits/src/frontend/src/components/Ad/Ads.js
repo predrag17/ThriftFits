@@ -16,7 +16,6 @@ function Ads() {
         if (location.pathname === "/ads") {
             Service.fetchAllAds()
                 .then(response => {
-                    console.log(response.data)
                     setAds(response.data);
                 })
                 .catch(error => {
@@ -30,7 +29,6 @@ function Ads() {
 
             Service.fetchMyAds()
                 .then(response => {
-                    console.log(response.data)
                     setAds(response.data);
                 })
                 .catch(error => {
@@ -45,22 +43,23 @@ function Ads() {
 
             <div className="container-fluid" style={{marginTop: "150px"}}>
                 {location.pathname === "/ads" && (
-                    <h1 style={{textAlign: "center", fontWeight: "bold", marginBottom: "50px"}}>Here are the all
-                        ads!</h1>
+                    <h1 style={{textAlign: "center", fontWeight: "bold", marginBottom: "50px"}}>All Ads!</h1>
                 )}
 
                 {location.pathname === "/myAds" && (
-                    <h1 style={{textAlign: "center", fontWeight: "bold", marginBottom: "50px"}}>Here are your all added
-                        ads!</h1>
+                    <h1 style={{textAlign: "center", fontWeight: "bold", marginBottom: "50px"}}>Your Added Ads!</h1>
                 )}
 
-                <div className="row">
-                    {ads.map(ad => (
-                        <div className="col-md-4 mb-4" key={ad.id}>
-                            <AdCard ad={ad}/>
-                        </div>
-                    ))}
+                <div className="container-fluid">
+                    <div className="row d-flex justify-content-start">
+                        {ads.map(ad => (
+                            <div className="col-md-3 mb-4 d-flex justify-content-center" key={ad.id}>
+                                <AdCard ad={ad}/>
+                            </div>
+                        ))}
+                    </div>
                 </div>
+
             </div>
 
             <Footer/>

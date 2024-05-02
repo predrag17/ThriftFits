@@ -23,7 +23,11 @@ const Service = {
     },
 
     fetchImageById: (id) => {
-        return axios.get(`/img/${id}/details`);
+        return axios.get(`/img/${id}/details`, {responseType: 'blob'});
+    },
+
+    fetchNewestAds: () => {
+        return axios.get("http://localhost:8080/api/ads/newest");
     }
 }
 

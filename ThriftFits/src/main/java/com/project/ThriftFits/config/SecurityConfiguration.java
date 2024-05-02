@@ -30,6 +30,8 @@ public class SecurityConfiguration {
                                 AntPathRequestMatcher.antMatcher("/resources/static/images/**"),
                                 AntPathRequestMatcher.antMatcher("/api/auth/register"),
                                 AntPathRequestMatcher.antMatcher("/api/auth/authenticate"),
+                                AntPathRequestMatcher.antMatcher("/api/ads/newest"),
+                                AntPathRequestMatcher.antMatcher("/api/img/**/details"),
                                 AntPathRequestMatcher.antMatcher("/api/ads"),
                                 AntPathRequestMatcher.antMatcher("/api/user/**"),
                                 AntPathRequestMatcher.antMatcher("/api/search"),
