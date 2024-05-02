@@ -24,16 +24,13 @@ function MainLogin() {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log(formData)
         Service.loginUser(formData)
             .then(response => {
-                console.log("User successfully logged in: ", response.data)
                 localStorage.setItem("JWT", response.data.token)
 
                 history("/home")
             })
-            .catch(error => {
-                console.error("Error: ", error)
+            .catch(() => {
                 setError("Invalid username or password")
 
                 setTimeout(() => {

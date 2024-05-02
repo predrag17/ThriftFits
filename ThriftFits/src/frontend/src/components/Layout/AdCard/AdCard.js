@@ -2,15 +2,17 @@ import React, {useEffect, useState} from 'react'
 import "bootstrap/dist/css/bootstrap.min.css"
 import "../../../index.css"
 import "./adcard.css"
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import Service from "../../../repository/Service";
 import {jwtDecode} from "jwt-decode";
 
-function AdCard({ad, onDelete}) {
+
+function AdCard({ad}) {
 
     const [imageUrl, setImageUrl] = useState(null);
     const [timeAgo, setTimeAgo] = useState(null);
     const [username, setUsername] = useState(null);
+    const history = useNavigate();
 
     useEffect(() => {
         const JWT = localStorage.getItem("JWT");
@@ -19,7 +21,7 @@ function AdCard({ad, onDelete}) {
             setUsername(jwtDecode(JWT).sub);
         }
 
-        if (ad !== null) {
+        if (ad !== null && ad.image) {
             Service.fetchImageById(ad.image.id)
                 .then(response => {
                     const url = URL.createObjectURL(response.data);
@@ -27,7 +29,8 @@ function AdCard({ad, onDelete}) {
                 })
                 .catch(error => {
                     console.log(error);
-                })
+                    setImageUrl(null);
+                });
         }
 
         const currentTime = new Date();
@@ -57,6 +60,24 @@ function AdCard({ad, onDelete}) {
             return `${days} day${days > 1 ? 's' : ''} ago`;
         }
     };
+
+    const handleDelete = (event) => {
+        event.stopPropagation();
+        event.preventDefault();
+
+        Service.deleteAdById(ad.id)
+            .then(() => {
+                setImageUrl(null);
+                history("/success");
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }
+
+    const handleEdit = () => {
+        history(`/ads/${ad.id}`)
+    }
 
 
     return (
@@ -88,17 +109,21 @@ function AdCard({ad, onDelete}) {
                             <div className="d-flex align-items-center justify-content-center">
                                 {username && ad.user.username === username && (
                                     <>
-                                        <button className="btn btn-warning">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                 fill="currentColor" className="bi bi-pencil-square"
-                                                 viewBox="0 0 16 16">
-                                                <path
-                                                    d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                                                <path
-                                                    d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
-                                            </svg>
-                                        </button>
-                                        <button className="btn btn-danger" style={{margin: "0 5px"}}>
+                                        <Link to={`/ads/${ad.id}/edit`}>
+                                            <button className="btn btn-warning">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                     fill="currentColor" className="bi bi-pencil-square"
+                                                     viewBox="0 0 16 16">
+                                                    <path
+                                                        d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                                    <path
+                                                        d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+                                                </svg>
+                                            </button>
+                                        </Link>
+
+                                        <button className="btn btn-danger" style={{margin: "0 5px"}}
+                                                onClick={(event) => handleDelete(event)}>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                  fill="currentColor" className="bi bi-trash3" viewBox="0 0 16 16">
                                                 <path

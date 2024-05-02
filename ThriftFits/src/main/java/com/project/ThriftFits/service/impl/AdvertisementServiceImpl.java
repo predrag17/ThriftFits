@@ -30,6 +30,7 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     private final AdvertisementRepository advertisementRepository;
     private final UserDetailsService userDetailsService;
     private final UserRepository userRepository;
+    private final ImageRepository imageRepository;
     private static final String UPLOAD_DIR = "src/main/resources/static/images/";
 
     @Override
@@ -60,6 +61,7 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     public Advertisement deleteAd(Long id) {
         Advertisement advertisement = getAdById(id);
 
+        imageRepository.delete(advertisement.getImage());
         advertisementRepository.delete(advertisement);
 
         return advertisement;

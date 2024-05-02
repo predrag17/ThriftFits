@@ -32,6 +32,10 @@ const Service = {
 
     deleteAdById: (id) => {
         return axios.delete(`/ads/${id}/delete`);
+    },
+
+    getAdById: (id) => {
+        return axios.get(`/ads/${id}/details`);
     }
 }
 
