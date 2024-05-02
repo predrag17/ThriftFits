@@ -1,7 +1,6 @@
 package com.project.ThriftFits.service;
 
 import com.project.ThriftFits.model.Advertisement;
-import com.project.ThriftFits.model.DTO.AdvertisementDTO;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -13,9 +12,9 @@ public interface AdvertisementService {
 
     Advertisement getAdById(Long id);
 
-    Advertisement updateAd(Long id, AdvertisementDTO adDTO);
+    Advertisement updateAd(Long id, String clothingName, String clothingBrand, String clothingType, String clothingSize, String clothingColor, String description, MultipartFile image);
 
-    Advertisement deleteAd(Long id);
+    void deleteAd(Long id);
 
     List<Advertisement> getNewestAds();
 

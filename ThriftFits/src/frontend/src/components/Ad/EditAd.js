@@ -9,8 +9,6 @@ function EditAd() {
     const {id} = useParams();
     const [ad, setAd] = useState(null);
     const [imageSrc, setImageSrc] = useState(null);
-    const [selectedClothing, setSelectedClothing] = useState("");
-    const [showSizeInput, setShowSizeInput] = useState(false);
     const [showNotification, setShowNotification] = useState(false);
     const [formData, setFormData] = useState({
         clothingName: '',
@@ -27,13 +25,21 @@ function EditAd() {
             .then(response => {
                 setAd(response.data)
                 setFormData({
-                    clothingName:
+                    clothingName: response.data.clothingName,
+                    clothingBrand: response.data.clothingBrand,
+                    clothingType: response.data.clothingType,
+                    clothingSize: response.data.clothingSize,
+                    clothingColor: response.data.clothingColor,
+                    description: response.data.description,
+                    image: null
                 })
             })
             .catch(error => {
                 console.error(error);
             })
-    }, []);
+
+
+    }, [id]);
 
     const handleFileSelect = (event) => {
         const file = event.target.files[0];
@@ -47,19 +53,11 @@ function EditAd() {
             reader.readAsDataURL(file);
             setFormData({
                 ...formData,
-                image: file // Set image file
+                image: file
             });
         } else
             setImageSrc(null);
     };
-
-    const handleClothingSelect = (event) => {
-        const selectedValue = event.target.value;
-        setSelectedClothing(selectedValue);
-
-        setShowSizeInput(selectedValue !== "");
-        handleChange(event);
-    }
 
     const handleFocus = () => {
         setShowNotification(true);
@@ -79,16 +77,19 @@ function EditAd() {
     const handleSubmit = (e) => {
         e.preventDefault();
 
+
         const formDataToSend = new FormData();
         for (let key in formData) {
             formDataToSend.append(key, formData[key]);
         }
 
-        Service.addAd(formDataToSend)
+        console.log(formDataToSend)
+
+        Service.editAd(formDataToSend, ad.id)
             .then(response => {
                 console.log("Successfully added Ad: ", response.data);
 
-                history("/myAds")
+                history("/success")
             })
             .catch(error => {
                 console.error("Error: ", error);
@@ -102,7 +103,7 @@ function EditAd() {
 
             <div className="container" style={{marginTop: "200px"}}>
                 <div className="header" style={{marginBottom: "50px"}}>
-                    <h2>Step closer to Add/Edit an Ad</h2>
+                    <h2>Step closer to Edit an Ad</h2>
                 </div>
 
                 <div className="container" style={{marginBottom: "50px"}}>
@@ -212,8 +213,8 @@ function EditAd() {
                                             className="form-control"
                                             id="clothingType"
                                             name="clothingType"
+                                            onChange={handleChange}
                                             value={formData.clothingType}
-                                            onChange={handleClothingSelect}
                                             required
                                         >
                                             <option value="">Clothing Type</option>
@@ -268,24 +269,23 @@ function EditAd() {
                                     </div>
 
                                     <div>
-                                        {showSizeInput && (
-                                            <div className="form-group">
-                                                {showNotification && (
-                                                    <small style={{color: "gray"}}>This field is not
-                                                        required</small>
-                                                )}
-                                                <input
-                                                    type="text"
-                                                    className="form-control"
-                                                    name="clothingSize"
-                                                    value={formData.clothingSize}
-                                                    onChange={handleChange}
-                                                    onFocus={handleFocus}
-                                                    onBlur={handleBlur}
-                                                    placeholder="Size"
-                                                />
-                                            </div>
-                                        )}
+                                        <div className="form-group">
+                                            {showNotification && (
+                                                <small style={{color: "gray"}}>This field is not
+                                                    required</small>
+                                            )}
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                name="clothingSize"
+                                                value={formData.clothingSize}
+                                                onChange={handleChange}
+                                                onFocus={handleFocus}
+                                                onBlur={handleBlur}
+                                                placeholder="Size"
+                                            />
+                                        </div>
+
                                     </div>
                                 </div>
 

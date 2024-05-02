@@ -49,13 +49,31 @@ public class AdvertisementController {
     }
 
     @PutMapping("{id}/edit")
-    public ResponseEntity<Advertisement> updateAd(@PathVariable Long id, @RequestBody AdvertisementDTO advertisementDTO) {
-        return ResponseEntity.ok(advertisementService.updateAd(id, advertisementDTO));
+    public ResponseEntity<Advertisement> updateAd(
+            @PathVariable Long id,
+            @RequestParam("clothingName") String clothingName,
+            @RequestParam("clothingBrand") String clothingBrand,
+            @RequestParam("clothingType") String clothingType,
+            @RequestParam(value = "clothingSize", required = false) String clothingSize,
+            @RequestParam("clothingColor") String clothingColor,
+            @RequestParam(value = "description", required = false) String description,
+            @RequestParam("image") MultipartFile image
+    ) {
+        return ResponseEntity.ok(advertisementService.updateAd(
+                id,
+                clothingName,
+                clothingBrand,
+                clothingType,
+                clothingSize,
+                clothingColor,
+                description,
+                image
+        ));
     }
 
     @DeleteMapping("{id}/delete")
     public ResponseEntity<Void> deleteAd(@PathVariable Long id) {
-        Advertisement advertisement = advertisementService.deleteAd(id);
+        advertisementService.deleteAd(id);
         return ResponseEntity.ok().build();
     }
 

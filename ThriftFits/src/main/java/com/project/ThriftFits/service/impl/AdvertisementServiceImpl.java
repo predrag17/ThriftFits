@@ -1,7 +1,6 @@
 package com.project.ThriftFits.service.impl;
 
 import com.project.ThriftFits.model.Advertisement;
-import com.project.ThriftFits.model.DTO.AdvertisementDTO;
 import com.project.ThriftFits.model.Image;
 import com.project.ThriftFits.model.User;
 import com.project.ThriftFits.model.exceptions.InvalidAdIdException;
@@ -44,27 +43,42 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     }
 
     @Override
-    public Advertisement updateAd(Long id, AdvertisementDTO adDTO) {
+    public Advertisement updateAd(
+            Long id,
+            String clothingName,
+            String clothingBrand,
+            String clothingType,
+            String clothingSize,
+            String clothingColor,
+            String description,
+            MultipartFile image
+    ) {
         Advertisement advertisement = getAdById(id);
 
-        advertisement.setClothingName(adDTO.getClothingName());
-        advertisement.setClothingType(adDTO.getClothingType());
-        advertisement.setClothingBrand(adDTO.getClothingBrand());
-        advertisement.setClothingSize(adDTO.getClothingSize());
-        advertisement.setClothingColor(adDTO.getClothingColor());
-        advertisement.setDescription(adDTO.getDescription());
+        advertisement.setClothingName(clothingName);
+        advertisement.setClothingBrand(clothingBrand);
+        advertisement.setClothingType(clothingType);
+        advertisement.setClothingSize(clothingSize);
+        advertisement.setClothingColor(clothingColor);
+        advertisement.setDescription(description);
+
+        String imageNewName = saveNameAsPng(image);
+        String path = uploadImage(image, imageNewName);
+
+        advertisement.getImage().setName(imageNewName);
+        advertisement.getImage().setPath(path);
 
         return advertisementRepository.save(advertisement);
     }
 
+
     @Override
-    public Advertisement deleteAd(Long id) {
+    public void deleteAd(Long id) {
         Advertisement advertisement = getAdById(id);
 
         imageRepository.delete(advertisement.getImage());
         advertisementRepository.delete(advertisement);
 
-        return advertisement;
     }
 
     @Override

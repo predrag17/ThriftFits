@@ -14,6 +14,10 @@ const Service = {
         return axios.post("/ads/add", data);
     },
 
+    editAd: (data, id) => {
+        return axios.put(`/ads/${id}/edit`, data);
+    },
+
     fetchAllAds: () => {
         return axios.get("/ads");
     },

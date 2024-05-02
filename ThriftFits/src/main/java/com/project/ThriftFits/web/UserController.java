@@ -17,8 +17,8 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/{username}")
-    public List<Advertisement> getAllAdsFromUser(@PathVariable String username) {
-        return userService.getAdsFromUser(username);
+    public ResponseEntity<List<Advertisement>> getAllAdsFromUser(@PathVariable String username) {
+        return ResponseEntity.ok(userService.getAdsFromUser(username));
     }
 
 }

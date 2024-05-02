@@ -84,7 +84,7 @@ function Main() {
     return (
         <div className="container" style={{marginTop: "200px"}}>
             <div className="header" style={{marginBottom: "50px"}}>
-                <h2>Step closer to Add/Edit an Ad</h2>
+                <h2>Step closer to Add an Ad</h2>
             </div>
 
             <div className="container" style={{marginBottom: "50px"}}>
