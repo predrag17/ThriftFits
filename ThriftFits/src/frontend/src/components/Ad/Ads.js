@@ -25,17 +25,20 @@ function Ads() {
             const token = localStorage.getItem("JWT");
             if (token === null) {
                 history("/login")
+            } else {
+
+                Service.fetchMyAds()
+                    .then(response => {
+                        setAds(response.data);
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    })
             }
 
-            Service.fetchMyAds()
-                .then(response => {
-                    setAds(response.data);
-                })
-                .catch(error => {
-                    console.error(error);
-                })
+
         }
-    }, []);
+    }, [location.pathname]);
 
     return (
         <>

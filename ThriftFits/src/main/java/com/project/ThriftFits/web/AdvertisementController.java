@@ -54,8 +54,9 @@ public class AdvertisementController {
     }
 
     @DeleteMapping("{id}/delete")
-    public ResponseEntity<Advertisement> deleteAd(@PathVariable Long id) {
-        return ResponseEntity.ok(advertisementService.deleteAd(id));
+    public ResponseEntity<Void> deleteAd(@PathVariable Long id) {
+        Advertisement advertisement = advertisementService.deleteAd(id);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("{id}/details")

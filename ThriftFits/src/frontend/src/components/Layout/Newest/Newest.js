@@ -2,10 +2,12 @@ import React, {useEffect, useState} from 'react'
 import '../../../index.css'
 import AdCard from "../AdCard/AdCard";
 import Service from "../../../repository/Service";
+import {useLocation} from "react-router-dom";
 
 function Newest() {
 
     const [ads, setAds] = useState([]);
+    const location = useLocation();
 
     useEffect(() => {
         Service.fetchNewestAds()

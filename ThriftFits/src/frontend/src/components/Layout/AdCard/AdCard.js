@@ -6,7 +6,7 @@ import {Link} from "react-router-dom";
 import Service from "../../../repository/Service";
 import {jwtDecode} from "jwt-decode";
 
-function AdCard({ad}) {
+function AdCard({ad, onDelete}) {
 
     const [imageUrl, setImageUrl] = useState(null);
     const [timeAgo, setTimeAgo] = useState(null);
@@ -19,7 +19,7 @@ function AdCard({ad}) {
             setUsername(jwtDecode(JWT).sub);
         }
 
-        if (ad.image.id) {
+        if (ad !== null) {
             Service.fetchImageById(ad.image.id)
                 .then(response => {
                     const url = URL.createObjectURL(response.data);
@@ -43,7 +43,7 @@ function AdCard({ad}) {
         }, 60000);
 
         return () => clearInterval(intervalId);
-    }, []);
+    }, [ad]);
 
     const calculateTimeAgo = (timeElapsed) => {
         const minutes = Math.floor(timeElapsed / (1000 * 60));
@@ -58,19 +58,6 @@ function AdCard({ad}) {
         }
     };
 
-    const handleDelete = () => {
-        const confirmDelete = window.confirm("Are you sure you want to delete this ad?");
-        if(confirmDelete) {
-            Service.deleteAdById(ad.id)
-                .then(response => {
-                    console.log("Succesfully deleted ad!", response.data);
-                })
-                .catch(error => {
-                    console.error("Not found!");
-                })
-        }
-
-    }
 
     return (
         <>
@@ -108,10 +95,10 @@ function AdCard({ad}) {
                                                 <path
                                                     d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
                                                 <path
-                                                      d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+                                                    d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
                                             </svg>
                                         </button>
-                                        <button className="btn btn-danger" style={{margin: "0 5px"}} onClick={handleDelete}>
+                                        <button className="btn btn-danger" style={{margin: "0 5px"}}>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                  fill="currentColor" className="bi bi-trash3" viewBox="0 0 16 16">
                                                 <path

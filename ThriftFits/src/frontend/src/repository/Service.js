@@ -28,6 +28,10 @@ const Service = {
 
     fetchNewestAds: () => {
         return axios.get("http://localhost:8080/api/ads/newest");
+    },
+
+    deleteAdById: (id) => {
+        return axios.delete(`/ads/${id}/delete`);
     }
 }
 
