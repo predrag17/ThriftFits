@@ -117,7 +117,7 @@ function Details() {
                             </div>
                         </div>
 
-                        <div className="container d-flex flex-column align-items-start">
+                        <div className="container d-flex flex-column align-items-start" style={{marginLeft: "10px"}}>
                             <div className="d-flex flex-column justify-content-center">
                                 <h3 style={{fontWeight: "bold"}}>{ad.clothingName}</h3>
                                 {ad.clothingSize && (<p style={{fontSize: "20px"}}>Size {ad.clothingSize}</p>)}
@@ -130,7 +130,8 @@ function Details() {
                             </div>
 
                             <div style={{
-                                width: "80%",
+                                width: "100%",
+                                marginLeft: "30px",
                                 maxHeight: "200px",
                                 overflowY: "auto",
                                 fontSize: "20px",
@@ -158,6 +159,10 @@ function Details() {
                                         </button>
                                     </div>
                                 )}
+                            </div>
+
+                            <div style={{marginTop: "20px"}}>
+                                <p style={{fontSize: "20px"}}>To view all ads posted by this user, click <Link to={`/user/${ad.user.username}`}>here</Link></p>
                             </div>
                         </div>
                     </div>

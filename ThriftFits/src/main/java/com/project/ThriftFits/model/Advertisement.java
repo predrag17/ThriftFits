@@ -52,13 +52,6 @@ public class Advertisement {
     @JsonIgnoreProperties("advertisements")
     private User user;
 
-    @ManyToMany
-    @JoinTable(
-            name = "favourite_ads",
-            joinColumns = @JoinColumn(name = "favourite_id"),
-            inverseJoinColumns = @JoinColumn(name = "ad_id")
-    )
-    private List<Favourite> favourites;
 
     public Advertisement(String clothingName, String clothingType, String clothingBrand, String clothingSize, String clothingColor, String description, LocalDateTime createdAt, User user) {
         this.clothingName = clothingName;

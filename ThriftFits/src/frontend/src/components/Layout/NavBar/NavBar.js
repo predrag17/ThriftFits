@@ -154,7 +154,7 @@ function NavBar({parentComponent}) {
                                                 className="sr-only"></span></a>
                                     </li>
                                     <li className="nav-items">
-                                        <a className="nav-link" href={"/myFavourites"}>
+                                        <a className="nav-link" href={"/fave"}>
                                             Favourites
                                             <span
                                                 className="sr-only"></span></a>

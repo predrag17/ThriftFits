@@ -50,8 +50,6 @@ public class User implements UserDetails {
     @JsonIgnoreProperties("user")
     private List<Advertisement> advertisements;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private Favourite favourite;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

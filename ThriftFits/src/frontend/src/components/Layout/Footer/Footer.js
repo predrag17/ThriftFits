@@ -1,11 +1,27 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import Logo from "../../../assets/Logo.png";
 import '../../../index.css'
 import "bootstrap/dist/css/bootstrap.min.css"
 import './footer.css'
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+import {jwtDecode} from "jwt-decode";
 
 function Footer() {
+
+    const [username, setUsername] = useState(null);
+    const history = useNavigate();
+
+    useEffect(() => {
+        const JWT = localStorage.getItem("JWT");
+        if (JWT) {
+            setUsername(jwtDecode(JWT).sub);
+        }
+    }, []);
+
+    const handleLogout = () => {
+        localStorage.removeItem("JWT");
+        history("/login")
+    }
 
     return (
         <div className="container-fluid" style={{backgroundColor: "#d4d7e7", width: "100%", height: "280px"}}>
@@ -66,13 +82,18 @@ function Footer() {
                     <h2>About</h2>
                     <ul>
                         <li>
-                            <Link to={"/register"} style={{textDecoration: "none", color: "black", fontWeight: "bold"}}>
-                                <p>Sign in</p>
-                            </Link>
+                            {username ? (
+                                <p onClick={handleLogout} style={{fontWeight: "bold", cursor:"pointer"}}>Logout</p>
+                            ) : (
+                                <Link to={"/login"}
+                                      style={{textDecoration: "none", color: "black", fontWeight: "bold"}}>
+                                    <p>Sign in</p>
+                                </Link>
+                            )}
                         </li>
 
                         <li>
-                            <Link to={"/myFavourites"}
+                            <Link to={"/fave"}
                                   style={{textDecoration: "none", color: "black", fontWeight: "bold"}}>
                                 <p>Favourites</p>
                             </Link>

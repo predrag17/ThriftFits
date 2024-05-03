@@ -42,8 +42,8 @@ const Service = {
         return axios.get(`/ads/${id}/details`);
     },
 
-    addAdToFavourite: (id) => {
-        return axios.post(`/fave/${id}/add`);
+    getAdsFromUser: (username) => {
+        return axios.get(`/user/${username}`)
     }
 }
 

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {Link, useLocation, useNavigate} from "react-router-dom";
+import {Link, useLocation, useNavigate, useParams} from "react-router-dom";
 import NavBar from "../Layout/NavBar/NavBar";
 import Footer from "../Layout/Footer/Footer";
 import '../../index.css'
@@ -8,11 +8,14 @@ import AdCard from "../Layout/AdCard/AdCard";
 
 function Ads() {
 
+    const {username} = useParams();
     const location = useLocation();
     const history = useNavigate()
     const [ads, setAds] = useState([])
 
     useEffect(() => {
+        const loc = location.pathname.toString();
+
         if (location.pathname === "/ads") {
             Service.fetchAllAds()
                 .then(response => {
@@ -26,7 +29,6 @@ function Ads() {
             if (token === null) {
                 history("/login")
             } else {
-
                 Service.fetchMyAds()
                     .then(response => {
                         setAds(response.data);
@@ -35,8 +37,14 @@ function Ads() {
                         console.error(error);
                     })
             }
-
-
+        } else if (username) {
+            Service.getAdsFromUser(username)
+                .then(response => {
+                    setAds(response.data)
+                })
+                .catch(error => {
+                    console.error(error);
+                })
         }
     }, [location.pathname]);
 
@@ -52,6 +60,13 @@ function Ads() {
                 {location.pathname === "/myAds" && (
                     <h1 style={{textAlign: "center", fontWeight: "bold", marginBottom: "50px"}}>Your Added Ads!</h1>
                 )}
+
+                {
+                    username && (
+                        <h1 style={{textAlign: "center", fontWeight: "bold", marginBottom: "50px"}}>Ads from user with
+                            username: {username}</h1>
+                    )
+                }
 
                 <div className="container-fluid">
                     <div className="row d-flex justify-content-start">
