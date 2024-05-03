@@ -10,7 +10,8 @@ function Details() {
     const {id} = useParams();
     const [ad, setAd] = useState(null);
     const [username, setUsername] = useState(null);
-    const history = useNavigate()
+    const history = useNavigate();
+    const [imageUrl, setImageUrl] = useState(null);
 
     useEffect(() => {
         const JWT = localStorage.getItem("JWT");
@@ -21,7 +22,15 @@ function Details() {
 
         Service.getAdById(id)
             .then(response => {
-                console.log(response.data)
+                Service.fetchImageById(response.data.image.id)
+                    .then(response => {
+                        const url = URL.createObjectURL(response.data);
+                        setImageUrl(url);
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        setImageUrl(null);
+                    });
                 setAd(response.data);
             })
             .catch(error => {
@@ -58,15 +67,15 @@ function Details() {
                         <h1 style={{fontWeight: "bold"}}>DETAILS FOR THE AD THAT POSTED {ad.user.username}</h1>
                     </div>
 
-                    <div className="container d-flex justify-content-between align-items-start">
+                    <div className="container d-flex justify-content-between align-items-center">
                         <div className="d-flex flex-column justify-content-center align-items-center"
                              style={{width: "100%", margin: "0"}}>
                             <div>
                                 <img
-                                    src={CardImage}
+                                    src={imageUrl}
                                     alt="Image"
                                     style={{
-                                        width: '350px',
+                                        width: '100%',
                                         height: '400px',
                                         marginTop: '10px',
                                         objectFit: 'cover',

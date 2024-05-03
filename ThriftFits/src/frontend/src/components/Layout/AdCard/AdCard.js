@@ -75,10 +75,16 @@ function AdCard({ad}) {
             });
     }
 
-    const handleEdit = () => {
-        history(`/ads/${ad.id}`)
+    const handleAddingFavourite = () => {
+        Service.addAdToFavourite(ad.id)
+            .then(response => {
+                console.log(response.data);
+                history("/fave")
+            })
+            .catch(error => {
+                console.error(error);
+            })
     }
-
 
     return (
         <>
@@ -138,7 +144,7 @@ function AdCard({ad}) {
                                     </>
                                 )}
                                 {username && username !== ad.user.username && (
-                                    <button className="btn btn-secondary">
+                                    <button className="btn btn-secondary" onClick={handleAddingFavourite}>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                              fill="currentColor"
                                              className="bi bi-heart" viewBox="0 0 16 16">

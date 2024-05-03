@@ -22,7 +22,7 @@ public class FavouriteServiceImpl implements FavouriteService {
     private final AdvertisementRepository advertisementRepository;
 
     @Override
-    public void addAdToFavourite(Long adId, User user) {
+    public Advertisement addAdToFavourite(Long adId, User user) {
         Advertisement advertisement = advertisementService.getAdById(adId);
 
         Favourite favourite = favouriteRepository
@@ -33,6 +33,8 @@ public class FavouriteServiceImpl implements FavouriteService {
         favourite.setQuantity(favourite.getQuantity() + 1);
 
         favouriteRepository.save(favourite);
+
+        return advertisement;
     }
 
     @Override

@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface FavouriteService {
 
-    void addAdToFavourite(Long adId, User user);
+    Advertisement addAdToFavourite(Long adId, User user);
 
     List<Advertisement> getAllAdsFromFavourite(User user);
 

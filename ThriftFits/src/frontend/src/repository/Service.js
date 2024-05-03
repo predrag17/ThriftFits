@@ -40,6 +40,10 @@ const Service = {
 
     getAdById: (id) => {
         return axios.get(`/ads/${id}/details`);
+    },
+
+    addAdToFavourite: (id) => {
+        return axios.post(`/fave/${id}/add`);
     }
 }
 
