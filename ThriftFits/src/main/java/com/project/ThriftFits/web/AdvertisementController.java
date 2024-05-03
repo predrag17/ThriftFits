@@ -30,9 +30,9 @@ public class AdvertisementController {
             @RequestParam("clothingName") String clothingName,
             @RequestParam("clothingBrand") String clothingBrand,
             @RequestParam("clothingType") String clothingType,
-            @RequestParam(value = "clothingSize", required = false) String clothingSize,
+            @RequestParam(value = "clothingSize") String clothingSize,
             @RequestParam("clothingColor") String clothingColor,
-            @RequestParam(value = "description", required = false) String description,
+            @RequestParam(value = "description") String description,
             @RequestParam("image") MultipartFile image
     ) throws IOException {
 
@@ -54,9 +54,9 @@ public class AdvertisementController {
             @RequestParam("clothingName") String clothingName,
             @RequestParam("clothingBrand") String clothingBrand,
             @RequestParam("clothingType") String clothingType,
-            @RequestParam(value = "clothingSize", required = false) String clothingSize,
+            @RequestParam(value = "clothingSize") String clothingSize,
             @RequestParam("clothingColor") String clothingColor,
-            @RequestParam(value = "description", required = false) String description,
+            @RequestParam(value = "description") String description,
             @RequestParam("image") MultipartFile image
     ) {
         return ResponseEntity.ok(advertisementService.updateAd(

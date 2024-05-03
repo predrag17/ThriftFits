@@ -100,6 +100,11 @@ function AdCard({ad}) {
                     <div className="card-body">
                         <h5 className="card-title text-center" style={{fontWeight: "bold"}}>{ad.clothingName}</h5>
                         <p className="text-center">{ad.user.email}</p>
+                        <Link to={`/ads/${ad.id}/details`}>
+                            <button className="btn btn-info" style={{width: "100%"}}>
+                                Details
+                            </button>
+                        </Link>
                     </div>
 
                     <div className="card-footer">
@@ -132,7 +137,7 @@ function AdCard({ad}) {
                                         </button>
                                     </>
                                 )}
-                                {username && (
+                                {username && username !== ad.user.username && (
                                     <button className="btn btn-secondary">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                              fill="currentColor"

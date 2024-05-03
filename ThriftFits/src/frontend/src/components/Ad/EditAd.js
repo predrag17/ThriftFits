@@ -9,7 +9,6 @@ function EditAd() {
     const {id} = useParams();
     const [ad, setAd] = useState(null);
     const [imageSrc, setImageSrc] = useState(null);
-    const [showNotification, setShowNotification] = useState(false);
     const [formData, setFormData] = useState({
         clothingName: '',
         clothingBrand: '',
@@ -58,14 +57,6 @@ function EditAd() {
         } else
             setImageSrc(null);
     };
-
-    const handleFocus = () => {
-        setShowNotification(true);
-    }
-
-    const handleBlur = () => {
-        setShowNotification(false);
-    }
 
     const handleChange = (e) => {
         setFormData({
@@ -270,19 +261,14 @@ function EditAd() {
 
                                     <div>
                                         <div className="form-group">
-                                            {showNotification && (
-                                                <small style={{color: "gray"}}>This field is not
-                                                    required</small>
-                                            )}
                                             <input
                                                 type="text"
                                                 className="form-control"
                                                 name="clothingSize"
                                                 value={formData.clothingSize}
                                                 onChange={handleChange}
-                                                onFocus={handleFocus}
-                                                onBlur={handleBlur}
                                                 placeholder="Size"
+                                                required
                                             />
                                         </div>
 
@@ -333,6 +319,7 @@ function EditAd() {
                                         value={formData.description}
                                         onChange={handleChange}
                                         placeholder="More details"
+                                        required
                                     ></textarea>
                                     </div>
                                 </div>

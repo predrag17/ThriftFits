@@ -10,7 +10,6 @@ function Main() {
     const [imageSrc, setImageSrc] = useState(null);
     const [selectedClothing, setSelectedClothing] = useState("");
     const [showSizeInput, setShowSizeInput] = useState(false);
-    const [showNotification, setShowNotification] = useState(false);
     const [formData, setFormData] = useState({
         clothingName: '',
         clothingBrand: '',
@@ -45,14 +44,6 @@ function Main() {
 
         setShowSizeInput(selectedValue !== "");
         handleChange(event);
-    }
-
-    const handleFocus = () => {
-        setShowNotification(true);
-    }
-
-    const handleBlur = () => {
-        setShowNotification(false);
     }
 
     const handleChange = (e) => {
@@ -248,19 +239,14 @@ function Main() {
                                 <div>
                                     {showSizeInput && (
                                         <div className="form-group">
-                                            {showNotification && (
-                                                <small style={{color: "gray"}}>This field is not
-                                                    required</small>
-                                            )}
                                             <input
                                                 type="text"
                                                 className="form-control"
                                                 name="clothingSize"
                                                 value={formData.clothingSize}
                                                 onChange={handleChange}
-                                                onFocus={handleFocus}
-                                                onBlur={handleBlur}
                                                 placeholder="Size"
+                                                required
                                             />
                                         </div>
                                     )}
@@ -310,6 +296,7 @@ function Main() {
                                         value={formData.description}
                                         onChange={handleChange}
                                         placeholder="More details"
+                                        required
                                     ></textarea>
                                 </div>
                             </div>

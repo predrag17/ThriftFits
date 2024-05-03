@@ -33,11 +33,13 @@ public class Advertisement {
     @NotBlank
     private String clothingBrand;
 
+    @NotBlank
     private String clothingSize;
 
     @NotBlank
     private String clothingColor;
 
+    @NotBlank
     private String description;
 
     private LocalDateTime createdAt;

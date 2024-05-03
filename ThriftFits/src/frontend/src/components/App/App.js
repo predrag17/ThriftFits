@@ -8,6 +8,7 @@ import AddAd from "../Ad/AddAd";
 import Ads from "../Ad/Ads";
 import Success from "../Success/Success";
 import EditAd from "../Ad/EditAd";
+import Details from "../Ad/Details";
 
 function App() {
     return (
@@ -20,6 +21,7 @@ function App() {
                 <Route path="/about" element={<About/>}/>
                 <Route path="/add" element={<AddAd/>}/>
                 <Route path="/ads/:id/edit" element={<EditAd/>}/>
+                <Route path="/ads/:id/details" element={<Details/>}/>
                 <Route path="/myAds" element={<Ads/>}/>
                 <Route path="/ads" element={<Ads/>}/>
                 <Route path="/success" element={<Success/>}/>
