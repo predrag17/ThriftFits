@@ -9,7 +9,8 @@ import {jwtDecode} from "jwt-decode";
 function NavBar({parentComponent}) {
     const [token, setToken] = useState(null);
     const [username, setUsername] = useState(null);
-    const history = useNavigate()
+    const history = useNavigate();
+    const [searchText, setSearchText] = useState("");
 
     useEffect(() => {
         const storedToken = localStorage.getItem("JWT");
@@ -40,6 +41,15 @@ function NavBar({parentComponent}) {
 
     };
 
+    const handleChange = (e) => {
+        setSearchText(e.target.value);
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        history("/search", { state: { searchText } });
+    }
+
 
     return (
         <nav className="navbar navbar-expand-lg navbar-light fixed-top shadow-lg">
@@ -54,20 +64,32 @@ function NavBar({parentComponent}) {
                 {parentComponent !== "Login" && parentComponent !== "Register" && (
                     <div className="d-flex">
                         <div className="input-group" style={{position: "relative", width: "100%"}}>
-                            <input type="text" className="form-control" placeholder="Search" aria-label="Search"
-                                   aria-describedby="button-addon2"
-                                   style={{zIndex: 1, padding: "0.5rem 20rem 0.5rem 1rem"}}/>
+                            <form onSubmit={handleSubmit}>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="Search"
+                                    aria-label="Search"
+                                    aria-describedby="button-addon2"
+                                    style={{zIndex: 1, padding: "0.5rem 20rem 0.5rem 1rem"}}
+                                    name="searchText"
+                                    value={searchText}
+                                    onChange={handleChange}
+                                />
 
-                            <button className="btn" type="button" id="button-addon2"
+                                <button
+                                    className="btn"
+                                    type="submit"
+                                    id="button-addon2"
                                     style={{position: "absolute", right: 0, top: 0, bottom: 0, zIndex: 2}}>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                     className="bi bi-search" viewBox="0 0 16 16">
-                                    <path
-                                        d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
-                                </svg>
-                            </button>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         className="bi bi-search" viewBox="0 0 16 16">
+                                        <path
+                                            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                                    </svg>
+                                </button>
+                            </form>
                         </div>
-
                     </div>
 
                 )}

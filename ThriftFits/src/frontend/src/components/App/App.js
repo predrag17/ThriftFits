@@ -26,9 +26,9 @@ function App() {
                 <Route path="/myAds" element={<Ads/>}/>
                 <Route path="/ads" element={<Ads/>}/>
                 <Route path="/user/:username" element={<Ads/>}/>
+                <Route path="/search" element={<Ads/>}/>
                 <Route path="/fave" element={<Info/>}/>
                 <Route path="/success" element={<Success/>}/>
-
             </Routes>
         </Router>
 

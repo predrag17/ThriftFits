@@ -44,6 +44,14 @@ const Service = {
 
     getAdsFromUser: (username) => {
         return axios.get(`/user/${username}`)
+    },
+
+    filterAds: (formData) => {
+        return axios.post("/ads/filtered", formData);
+    },
+
+    search: (searchText) => {
+        return axios.post("/search", searchText);
     }
 }
 
