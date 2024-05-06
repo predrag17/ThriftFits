@@ -116,6 +116,7 @@ function Ads() {
             setAds(sortedAds);
             setSortOldest(false);
         }
+        setShowMenu(!showMenu);
     };
 
 
@@ -431,7 +432,8 @@ function Ads() {
                             ) : (
                                 <div className="d-flex flex-column justify-content-between align-items-center">
                                     <p style={{textAlign: "center", fontWeight: "bold", fontSize: "40px"}}>
-                                        There is no Ad with that Clothing Name or User with that Username, or maybe this User hasn't posted any ads yet.
+                                        There is no Ad with that Clothing Name or User with that Username, or maybe this
+                                        User hasn't posted any ads yet.
                                     </p>
                                     <div className="container d-flex justify-content-center">
                                         <Link to={"/home"}>
