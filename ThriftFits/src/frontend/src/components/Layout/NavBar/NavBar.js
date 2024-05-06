@@ -11,6 +11,7 @@ function NavBar({parentComponent}) {
     const [username, setUsername] = useState(null);
     const history = useNavigate();
     const [searchText, setSearchText] = useState("");
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
     useEffect(() => {
         const storedToken = localStorage.getItem("JWT");
@@ -25,6 +26,16 @@ function NavBar({parentComponent}) {
             }
         }
 
+        const handleResize = () => {
+            setWindowWidth(window.innerWidth);
+        };
+
+        window.addEventListener("resize", handleResize);
+
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
+
     }, []);
 
 
@@ -36,8 +47,18 @@ function NavBar({parentComponent}) {
     const toggleHamburger = () => {
         const hamburger = document.querySelector(".hamburger");
         const navMenu = document.querySelector(".nav-menu");
+        const navbarNav = document.querySelector(".navbar-nav");
+        const body = document.querySelector("body");
+
         hamburger.classList.toggle("active");
-        navMenu.classList.toggle("active");
+
+        if (token !== null) {
+            navMenu.classList.toggle("active");
+        }
+
+        navbarNav.classList.toggle("active");
+
+        body.classList.toggle("no-scroll");
 
     };
 
@@ -47,57 +68,55 @@ function NavBar({parentComponent}) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        history("/search", { state: { searchText } });
+        history("/search", {state: {searchText}});
     }
 
 
     return (
         <nav className="navbar navbar-expand-lg navbar-light fixed-top shadow-lg">
-            <div className="container-fluid d-flex align-items-center justify-content-between">
-                <div style={{flex: "0 0 auto"}}>
+            <div className="container-fluid d-flex align-items-center justify-content-between" id="main-container">
+                <div className="brand">
                     <a className="navbar-brand" href={"/"}>
-                        <img src={Logo} alt="AppLogo"/>
+                        <img src={Logo} alt="AppLogo" className="logo"/>
                     </a>
-
                 </div>
 
-                {parentComponent !== "Login" && parentComponent !== "Register" && (
-                    <div className="d-flex">
-                        <div className="input-group" style={{position: "relative", width: "100%"}}>
-                            <form onSubmit={handleSubmit}>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    placeholder="Search"
-                                    aria-label="Search"
-                                    aria-describedby="button-addon2"
-                                    style={{zIndex: 1, padding: "0.5rem 20rem 0.5rem 1rem"}}
-                                    name="searchText"
-                                    value={searchText}
-                                    onChange={handleChange}
-                                />
+                <div className="d-flex justify-content-center flex-wrap" id="input-container">
+                    <div className="input-group" id="input-group">
+                        <form onSubmit={handleSubmit} style={{width: "100%"}}>
+                            <input
+                                type="text"
+                                className="form-control"
+                                placeholder="Search"
+                                aria-label="Search"
+                                aria-describedby="button-addon2"
+                                style={{zIndex: 1, padding: "0.5rem 2rem 0.5rem 0.5rem", width: "100%"}}
+                                name="searchText"
+                                value={searchText}
+                                onChange={handleChange}
+                            />
 
-                                <button
-                                    className="btn"
-                                    type="submit"
-                                    id="button-addon2"
-                                    style={{position: "absolute", right: 0, top: 0, bottom: 0, zIndex: 2}}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                         className="bi bi-search" viewBox="0 0 16 16">
-                                        <path
-                                            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
-                                    </svg>
-                                </button>
-                            </form>
-                        </div>
+                            <button
+                                className="btn"
+                                type="submit"
+                                id="button-addon2"
+                                style={{position: "absolute", right: 0, top: 0, bottom: 0, zIndex: 2}}>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     className="bi bi-search" viewBox="0 0 16 16">
+                                    <path
+                                        d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                                </svg>
+                            </button>
+                        </form>
                     </div>
+                </div>
 
-                )}
 
                 <div className="d-flex flex-row align-items-center justify-content-center"
-                     style={{marginRight: "10px"}}>
-                    <div className="navbar">
-                        <ul className="navbar-nav d-flex flex-row" id="unordered">
+                     id="last-container"
+                >
+                    <div className="navbar d-flex flex-row">
+                        <ul className="navbar-nav" id="unordered">
                             <li className="nav-item">
                                 <a className="nav-link" href={"/home"}>Home<span className="sr-only"></span></a>
                             </li>
@@ -159,29 +178,34 @@ function NavBar({parentComponent}) {
                         </div>
                     )}
 
-                    {parentComponent !== "Login" && parentComponent !== "Register" && token !== null &&
+                    {((token !== null) || windowWidth <= 1000) &&
                         (
                             <div>
-                                <ul className="nav-menu">
-                                    <li className="nav-items">
-                                        <a className="nav-link" href={"/add"}>
-                                            Add Ad
-                                            <span
-                                                className="sr-only"></span></a>
-                                    </li>
-                                    <li className="nav-items">
-                                        <a className="nav-link" href={"/myAds"}>
-                                            My Ads
-                                            <span
-                                                className="sr-only"></span></a>
-                                    </li>
-                                    <li className="nav-items">
-                                        <a className="nav-link" href={"/fave"}>
-                                            Favourites
-                                            <span
-                                                className="sr-only"></span></a>
-                                    </li>
-                                </ul>
+                                {token !== null && (
+                                    <>
+                                        <ul className="nav-menu">
+                                            <li className="nav-items">
+                                                <a className="nav-link" href={"/add"}>
+                                                    Add Ad
+                                                    <span
+                                                        className="sr-only"></span></a>
+                                            </li>
+                                            <li className="nav-items">
+                                                <a className="nav-link" href={"/myAds"}>
+                                                    My Ads
+                                                    <span
+                                                        className="sr-only"></span></a>
+                                            </li>
+                                            <li className="nav-items">
+                                                <a className="nav-link" href={"/fave"}>
+                                                    Favourites
+                                                    <span
+                                                        className="sr-only"></span></a>
+                                            </li>
+                                        </ul>
+                                    </>
+                                )}
+
 
                                 <div className="hamburger"
                                      onClick={toggleHamburger}

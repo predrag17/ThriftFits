@@ -5,7 +5,7 @@ import Login from "../LoginAndRegister/Login";
 import About from "../About/About";
 import Register from "../LoginAndRegister/Register";
 import AddAd from "../Ad/AddAd";
-import Ads from "../Ad/Ads";
+import Ads from "../Ad/Ads/Ads";
 import Success from "../Success/Success";
 import EditAd from "../Ad/EditAd";
 import Details from "../Ad/Details";

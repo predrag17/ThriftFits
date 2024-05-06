@@ -79,7 +79,7 @@ function MainRegister() {
                     <h1 className="text-center pt-4" style={{fontWeight: "bold", fontSize: "50px"}}>Register</h1>
 
                     <div className="container-fluid d-flex justify-content-center align-items-center">
-                        <div style={{width: "400px"}}>
+                        <div style={{width: "70%"}}>
                             <form
                                 onSubmit={handleSubmit}
                                 style={{

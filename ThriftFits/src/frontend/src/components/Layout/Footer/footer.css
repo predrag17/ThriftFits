@@ -1,10 +1,19 @@
+.main-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 20px;
+}
+
 .contacts {
     margin-top: 25px;
+    margin-left: 10px;
 }
 
 .contacts p {
     font-size: 20px;
     font-weight: bold;
+    margin: 0;
 }
 
 .socialNetworks h2 {
@@ -20,4 +29,31 @@
 
 .aboutSection {
     margin-right: 10px;
+}
+
+.aboutSection p {
+    font-size: 20px;
+    margin: 0;
+}
+
+@media screen and (max-width: 725px) {
+    .main-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .contacts {
+        margin-left: 0;
+        margin-top: 20px;
+    }
+
+    .socialNetworks {
+        margin-left: 0;
+        margin-top: 20px;
+        margin-bottom: 35px;
+    }
+
+    .aboutSection {
+        margin-right: 0;
+    }
 }

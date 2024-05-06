@@ -3,6 +3,7 @@ import '../../../index.css'
 import AdCard from "../AdCard/AdCard";
 import Service from "../../../repository/Service";
 import {Link} from "react-router-dom";
+import './newest.css'
 
 function Newest() {
 

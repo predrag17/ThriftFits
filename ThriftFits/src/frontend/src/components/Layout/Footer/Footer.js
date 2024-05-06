@@ -24,8 +24,9 @@ function Footer() {
     }
 
     return (
-        <div className="container-fluid" style={{backgroundColor: "#d4d7e7", width: "100%", height: "280px"}}>
-            <div className="d-flex flex-row justify-content-between align-items-center">
+        <div className="container-fluid"
+             style={{backgroundColor: "#d4d7e7", width: "100%", height: "40vh"}}>
+            <div className="main-container" id="main-container">
                 <div style={{marginTop: "50px"}}>
                     <a className="navbar-brand" href={"/"}>
                         <img src={Logo} alt="AppLogo"/>
@@ -83,7 +84,7 @@ function Footer() {
                     <ul>
                         <li>
                             {username ? (
-                                <p onClick={handleLogout} style={{fontWeight: "bold", cursor:"pointer"}}>Logout</p>
+                                <p onClick={handleLogout} style={{fontWeight: "bold", cursor: "pointer"}}>Logout</p>
                             ) : (
                                 <Link to={"/login"}
                                       style={{textDecoration: "none", color: "black", fontWeight: "bold"}}>
