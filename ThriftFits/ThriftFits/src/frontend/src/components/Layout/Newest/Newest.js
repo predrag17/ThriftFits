@@ -8,8 +8,15 @@ import './newest.css'
 function Newest() {
 
     const [ads, setAds] = useState([]);
+    const [JWT, setJWT] = useState(null);
 
     useEffect(() => {
+        const token = localStorage.getItem("JWT");
+
+        if (token) {
+            setJWT(token);
+        }
+
         Service.fetchNewestAds()
             .then(response => {
                 setAds(response.data)
@@ -48,13 +55,16 @@ function Newest() {
                                 <p style={{textAlign: "center", fontWeight: "bold", fontSize: "40px"}}>
                                     Still no ads have been added!
                                 </p>
-                                <div className="container d-flex justify-content-center">
-                                    <Link to={"/add"}>
-                                        <button className="btn btn-success btn-lg">
-                                            Add
-                                        </button>
-                                    </Link>
-                                </div>
+                                {JWT && (
+                                    <div className="container d-flex justify-content-center">
+                                        <Link to={"/add"}>
+                                            <button className="btn btn-success btn-lg">
+                                                Add
+                                            </button>
+                                        </Link>
+                                    </div>
+                                )}
+
                             </div>
                         </div>
                     </div>

@@ -3,7 +3,7 @@ import NavBar from "../Layout/NavBar/NavBar";
 import Footer from "../Layout/Footer/Footer";
 import {useNavigate, useParams} from "react-router-dom";
 import Service from "../../repository/Service";
-
+import './Main/main.css'
 function EditAd() {
     const history = useNavigate();
     const {id} = useParams();
@@ -99,7 +99,7 @@ function EditAd() {
 
                 <div className="container" style={{marginBottom: "50px"}}>
                     <form onSubmit={handleSubmit}>
-                        <div className="d-flex justify-content-center align-items-center">
+                        <div className="d-flex justify-content-center align-items-center styled-container">
                             <div className="container-fluid">
                                 <div className="form-group d-flex flex-column align-items-center justify-content-around"
                                      style={{height: "500px"}}>

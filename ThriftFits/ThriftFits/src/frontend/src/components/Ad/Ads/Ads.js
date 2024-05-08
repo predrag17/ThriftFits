@@ -6,6 +6,7 @@ import '../../../index.css'
 import Service from "../../../repository/Service";
 import AdCard from "../../Layout/AdCard/AdCard";
 import './ads.css'
+import {jwtDecode} from "jwt-decode";
 
 function Ads() {
 
@@ -23,8 +24,15 @@ function Ads() {
     });
     const [sortNewest, setSortNewest] = useState(false);
     const [sortOldest, setSortOldest] = useState(false);
+    const [JWT, setJWT] = useState(null);
 
     useEffect(() => {
+        const token = localStorage.getItem("JWT");
+
+        if (token) {
+            setJWT(token);
+        }
+
         if (location.pathname === "/ads") {
             Service.fetchAllAds()
                 .then(response => {
@@ -34,7 +42,6 @@ function Ads() {
                     console.error(error);
                 })
         } else if (location.pathname === "/myAds") {
-            const token = localStorage.getItem("JWT");
             if (token === null) {
                 history("/login")
             } else {
@@ -133,7 +140,7 @@ function Ads() {
                                     Ads!</h1>
                                 <button className="btn styled-btn"
                                         onClick={toggleMenu}
-                                       >
+                                >
                                     <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor"
                                          className="bi bi-filter-right" viewBox="0 0 16 16">
                                         <path
@@ -429,13 +436,18 @@ function Ads() {
                                         <p style={{textAlign: "center", fontWeight: "bold", fontSize: "40px"}}>
                                             Still no ads have been added!
                                         </p>
-                                        <div className="container d-flex justify-content-center">
-                                            <Link to={"/add"}>
-                                                <button className="btn btn-success btn-lg">
-                                                    Add
-                                                </button>
-                                            </Link>
-                                        </div>
+                                        {
+                                            JWT && (
+                                                <div className="container d-flex justify-content-center">
+                                                    <Link to={"/add"}>
+                                                        <button className="btn btn-success btn-lg">
+                                                            Add
+                                                        </button>
+                                                    </Link>
+                                                </div>
+                                            )
+                                        }
+
 
                                     </div>
                                 ) : (

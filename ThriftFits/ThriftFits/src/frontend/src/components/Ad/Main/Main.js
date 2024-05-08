@@ -80,7 +80,7 @@ function Main() {
 
             <div className="container" style={{marginBottom: "50px"}}>
                 <form onSubmit={handleSubmit}>
-                    <div className="d-flex justify-content-center align-items-center">
+                    <div className="d-flex justify-content-center align-items-center styled-container">
                         <div className="container-fluid">
                             <div className="form-group d-flex flex-column align-items-center justify-content-around"
                                  style={{height: "500px"}}>

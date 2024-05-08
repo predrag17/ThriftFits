@@ -5,6 +5,7 @@ import Service from "../../repository/Service";
 import CardImage from '../../assets/clothes.jpg'
 import Footer from "../Layout/Footer/Footer";
 import {jwtDecode} from "jwt-decode";
+import './Main/main.css'
 
 function Details() {
     const {id} = useParams();
@@ -62,12 +63,13 @@ function Details() {
         <>
             <NavBar/>
             <div className="container" style={{marginTop: "150px", marginBottom: "100px"}}>
-                <div className="container d-flex flex-column justify-content-center align-items-center">
+                <div
+                    className="container d-flex flex-column justify-content-center align-items-center ">
                     <div style={{marginBottom: "30px"}}>
                         <h1 style={{fontWeight: "bold"}}>DETAILS FOR THE AD THAT POSTED {ad.user.username}</h1>
                     </div>
 
-                    <div className="container d-flex justify-content-between align-items-center">
+                    <div className="container d-flex justify-content-between align-items-center styled-container">
                         <div className="d-flex flex-column justify-content-center align-items-center"
                              style={{width: "100%", margin: "0"}}>
                             <div>
@@ -162,7 +164,8 @@ function Details() {
                             </div>
 
                             <div style={{marginTop: "20px"}}>
-                                <p style={{fontSize: "20px"}}>To view all ads posted by this user, click <Link to={`/user/${ad.user.username}`}>here</Link></p>
+                                <p style={{fontSize: "20px"}}>To view all ads posted by this user, click <Link
+                                    to={`/user/${ad.user.username}`}>here</Link></p>
                             </div>
                         </div>
                     </div>
