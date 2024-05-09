@@ -28,9 +28,9 @@ function Footer() {
              style={{backgroundColor: "#d4d7e7", width: "100%", height: "40vh"}}>
             <div className="main-container" id="main-container">
                 <div style={{marginTop: "50px"}}>
-                    <a className="navbar-brand" href={"/"}>
+                    <Link to={"/"} className="navbar-brand">
                         <img src={Logo} alt="AppLogo"/>
-                    </a>
+                    </Link>
                 </div>
 
 

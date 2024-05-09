@@ -76,9 +76,9 @@ function NavBar({parentComponent}) {
         <nav className="navbar navbar-expand-lg navbar-light fixed-top shadow-lg">
             <div className="container-fluid d-flex align-items-center justify-content-between" id="main-container">
                 <div className="brand">
-                    <a className="navbar-brand" href={"/"}>
+                    <Link to={"/"} className="navbar-brand">
                         <img src={Logo} alt="AppLogo" className="logo"/>
-                    </a>
+                    </Link>
                 </div>
 
                 <div className="d-flex justify-content-center flex-wrap" id="input-container">
@@ -118,15 +118,19 @@ function NavBar({parentComponent}) {
                     <div className="navbar d-flex flex-row">
                         <ul className="navbar-nav" id="unordered">
                             <li className="nav-item">
-                                <a className="nav-link" href={"/home"}>Home<span className="sr-only"></span></a>
+                                <Link to={"/"} className="nav-link">
+                                    Home
+                                </Link>
                             </li>
                             <li className="nav-item-1">
-                                <a className="nav-link" href="/ads">Ads</a>
+                                <Link to={"/ads"} className="nav-link">
+                                    Ads
+                                </Link>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="/about">
+                                <Link to={"/about"} className="nav-link">
                                     About
-                                </a>
+                                </Link>
                             </li>
                         </ul>
                     </div>
@@ -185,22 +189,19 @@ function NavBar({parentComponent}) {
                                     <>
                                         <ul className="nav-menu">
                                             <li className="nav-items">
-                                                <a className="nav-link" href={"/add"}>
+                                                <Link to={"/add"} className="nav-link">
                                                     Add Ad
-                                                    <span
-                                                        className="sr-only"></span></a>
+                                                </Link>
                                             </li>
                                             <li className="nav-items">
-                                                <a className="nav-link" href={"/myAds"}>
+                                                <Link to={"/myAds"} className="nav-link">
                                                     My Ads
-                                                    <span
-                                                        className="sr-only"></span></a>
+                                                </Link>
                                             </li>
                                             <li className="nav-items">
-                                                <a className="nav-link" href={"/fave"}>
+                                                <Link to={"/fave"} className="nav-link">
                                                     Favourites
-                                                    <span
-                                                        className="sr-only"></span></a>
+                                                </Link>
                                             </li>
                                         </ul>
                                     </>

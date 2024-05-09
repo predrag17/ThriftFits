@@ -6,7 +6,6 @@ import '../../../index.css'
 import Service from "../../../repository/Service";
 import AdCard from "../../Layout/AdCard/AdCard";
 import './ads.css'
-import {jwtDecode} from "jwt-decode";
 
 function Ads() {
 

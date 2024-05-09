@@ -1,15 +1,7 @@
-import React, {useEffect} from 'react';
-import {Link, useNavigate} from 'react-router-dom';
+import React from 'react';
+import {Link} from 'react-router-dom';
 
-function SuccessMessage({parentComponent}) {
-
-    const history = useNavigate();
-
-    useEffect(() => {
-        if (parentComponent === undefined) {
-            history("/home");
-        }
-    }, []);
+function SuccessMessage() {
 
 
     return (

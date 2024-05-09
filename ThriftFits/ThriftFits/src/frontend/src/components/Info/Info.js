@@ -1,16 +1,8 @@
-import React, {useEffect} from 'react'
-import {Link, useLocation, useNavigate} from "react-router-dom";
+import React from 'react'
+import {Link} from "react-router-dom";
 
 
-function Info({ parentComponent }) {
-
-    const history = useNavigate();
-
-    useEffect(() => {
-        if(parentComponent === undefined) {
-            history("/home");
-        }
-    }, []);
+function Info() {
 
     return (
         <div className="container mt-5">
