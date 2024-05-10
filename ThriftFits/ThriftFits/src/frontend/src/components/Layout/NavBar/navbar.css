@@ -3,10 +3,6 @@ body {
     overflow: auto;
 }
 
-body.no-scroll {
-    overflow: hidden;
-}
-
 .navbar {
     background-color: #E3E6F3;
     width: 100%;

@@ -24,6 +24,7 @@ function Ads() {
     const [sortNewest, setSortNewest] = useState(false);
     const [sortOldest, setSortOldest] = useState(false);
     const [JWT, setJWT] = useState(null);
+    const [error, setError] = useState(false);
 
     useEffect(() => {
         const token = localStorage.getItem("JWT");
@@ -67,10 +68,18 @@ function Ads() {
             };
 
             const params = new URLSearchParams(searchData).toString();
-            console.log(params)
+
             Service.search(params)
                 .then(response => {
-                    setAds(response.data)
+                    if (response.data.length === 0) {
+                        setAds(response.data);
+                        setTimeout(() => {
+                            history("/ads");
+                        }, 3000);
+                    } else {
+                        setAds(response.data)
+                    }
+
                 })
                 .catch(error => {
                     console.error(error);
@@ -96,7 +105,23 @@ function Ads() {
 
         Service.filterAds(params)
             .then(response => {
-                setAds(response.data)
+                if (response.data.length === 0) {
+                    setError(true);
+                    setAds(response.data);
+                    setTimeout(() => {
+                        Service.fetchAllAds()
+                            .then(response => {
+                                setAds(response.data);
+                            })
+                            .catch(error => {
+                                console.error(error);
+                            });
+                        setError(false);
+                    }, 3000);
+                } else {
+                    setAds(response.data)
+                }
+
                 setFormData({
                     clothingName: '',
                     clothingBrand: '',
@@ -105,6 +130,7 @@ function Ads() {
                     clothingColor: ''
                 })
                 setShowMenu(!showMenu)
+
             })
             .catch(error => {
                 console.error(error)
@@ -426,43 +452,37 @@ function Ads() {
                     </div>
 
                 ) : (
-
                     <div className="container-fluid" style={{marginTop: "200px", marginBottom: "100px"}}>
                         <div className="container mt-5">
                             <div className="alert alert-success" role="alert">
                                 {location.pathname !== "/search" ? (
                                     <div className="d-flex flex-column justify-content-between align-items-center">
-                                        <p style={{textAlign: "center", fontWeight: "bold", fontSize: "40px"}}>
-                                            Still no ads have been added!
-                                        </p>
-                                        {
-                                            JWT && (
-                                                <div className="container d-flex justify-content-center">
-                                                    <Link to={"/add"}>
-                                                        <button className="btn btn-success btn-lg">
-                                                            Add
-                                                        </button>
-                                                    </Link>
-                                                </div>
-                                            )
-                                        }
+                                        {error ? (
+                                            <p style={{textAlign: "center", fontWeight: "bold", fontSize: "40px"}}>
+                                                There is no ads found from the filter! Filter again...
+                                            </p>
+                                        ) : (
+                                            <p style={{textAlign: "center", fontWeight: "bold", fontSize: "40px"}}>
+                                                Still no ads have been added!
+                                            </p>
+                                        )}
 
-
+                                        {error === false && JWT && (
+                                            <div className="container d-flex justify-content-center">
+                                                <Link to={"/add"}>
+                                                    <button className="btn btn-success btn-lg">
+                                                        Add
+                                                    </button>
+                                                </Link>
+                                            </div>
+                                        )}
                                     </div>
                                 ) : (
                                     <div className="d-flex flex-column justify-content-between align-items-center">
                                         <p style={{textAlign: "center", fontWeight: "bold", fontSize: "40px"}}>
-                                            There is no Ad with that Clothing Name or User with that Username, or maybe
-                                            this
-                                            User hasn't posted any ads yet.
+                                            Nothing found try search again...
+                                            You can search by Username or Clothing Name
                                         </p>
-                                        <div className="container d-flex justify-content-center">
-                                            <Link to={"/home"}>
-                                                <button className="btn btn-success btn-lg">
-                                                    Home
-                                                </button>
-                                            </Link>
-                                        </div>
 
                                     </div>
                                 )}
