@@ -13,6 +13,7 @@ function Details() {
     const [username, setUsername] = useState(null);
     const history = useNavigate();
     const [imageUrl, setImageUrl] = useState(null);
+    const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
 
     useEffect(() => {
         const JWT = localStorage.getItem("JWT");
@@ -49,14 +50,23 @@ function Details() {
         );
     }
 
-    const handleDelete = () => {
+    const handleDelete = (event) => {
+        event.stopPropagation();
+        event.preventDefault();
+
+        setShowDeleteConfirmation(true);
+    }
+
+    const confirmDelete = () => {
         Service.deleteAdById(ad.id)
             .then(() => {
-                history("/success")
+                setImageUrl(null);
+                setShowDeleteConfirmation(false);
+                history("/myAds");
             })
             .catch(error => {
                 console.error(error);
-            })
+            });
     }
 
     return (
@@ -172,6 +182,25 @@ function Details() {
                 </div>
 
             </div>
+
+            {showDeleteConfirmation && (
+                <div className="modal fade show" style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }}>
+                    <div className="modal-dialog modal-dialog-centered">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title">Confirmation</h5>
+                            </div>
+                            <div className="modal-body">
+                                <p>Are you sure you want to delete this ad?</p>
+                            </div>
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-secondary" onClick={() => setShowDeleteConfirmation(false)}>Cancel</button>
+                                <button type="button" className="btn btn-danger" onClick={confirmDelete}>Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
 
             <Footer/>
         </>

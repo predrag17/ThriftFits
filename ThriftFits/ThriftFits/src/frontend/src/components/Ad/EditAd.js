@@ -74,13 +74,9 @@ function EditAd() {
             formDataToSend.append(key, formData[key]);
         }
 
-        console.log(formDataToSend)
-
         Service.editAd(formDataToSend, ad.id)
-            .then(response => {
-                console.log("Successfully added Ad: ", response.data);
-
-                history("/success")
+            .then(() => {
+                history(`/ads/${ad.id}/details`)
             })
             .catch(error => {
                 console.error("Error: ", error);

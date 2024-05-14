@@ -8,7 +8,7 @@ import {Link} from "react-router-dom";
 
 function Infromation() {
     return (
-        <div className="container-fluid position-relative" style={{padding: "0", height: "450px"}}>
+        <div className="container-fluid position-relative" style={{padding: "0", height: "450px", marginBottom: '20px'}}>
             <img
                 src={InformationImage}
                 alt="Banner"

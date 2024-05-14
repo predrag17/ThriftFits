@@ -6,7 +6,6 @@ import About from "../About/About";
 import Register from "../LoginAndRegister/Register";
 import AddAd from "../Ad/AddAd";
 import Ads from "../Ad/Ads/Ads";
-import Success from "../Success/Success";
 import EditAd from "../Ad/EditAd";
 import Details from "../Ad/Details";
 import Info from "../Info/Info";
@@ -28,7 +27,6 @@ function App() {
                 <Route path="/user/:username" element={<Ads/>}/>
                 <Route path="/search" element={<Ads/>}/>
                 <Route path="/fave" element={<Info/>}/>
-                <Route path="/success" element={<Success/>}/>
             </Routes>
         </Router>
 

@@ -24,9 +24,11 @@ function Ads() {
     const [sortNewest, setSortNewest] = useState(false);
     const [sortOldest, setSortOldest] = useState(false);
     const [JWT, setJWT] = useState(null);
-    const [error, setError] = useState(false);
+    const [showNotFoundPopup, setShowNotFoundPopup] = useState(false);
+    const [navKey, setNavKey] = useState(0);
 
     useEffect(() => {
+        setNavKey(navKey + 1);
         const token = localStorage.getItem("JWT");
 
         if (token) {
@@ -47,7 +49,6 @@ function Ads() {
             } else {
                 Service.fetchMyAds()
                     .then(response => {
-                        console.log(response.data)
                         setAds(response.data);
                     })
                     .catch(error => {
@@ -106,17 +107,16 @@ function Ads() {
         Service.filterAds(params)
             .then(response => {
                 if (response.data.length === 0) {
-                    setError(true);
-                    setAds(response.data);
+                    setShowNotFoundPopup(true);
+                    Service.fetchAllAds()
+                        .then(response => {
+                            setAds(response.data);
+                        })
+                        .catch(error => {
+                            console.error(error);
+                        });
                     setTimeout(() => {
-                        Service.fetchAllAds()
-                            .then(response => {
-                                setAds(response.data);
-                            })
-                            .catch(error => {
-                                console.error(error);
-                            });
-                        setError(false);
+                        setShowNotFoundPopup(false);
                     }, 3000);
                 } else {
                     setAds(response.data)
@@ -154,7 +154,8 @@ function Ads() {
 
     return (
         <>
-            <NavBar/>
+            <NavBar key={navKey}/>
+
 
             <div className="content-wrapper" style={{}}>
                 {ads.slice().length !== 0 ? (
@@ -457,17 +458,11 @@ function Ads() {
                             <div className="alert alert-success" role="alert">
                                 {location.pathname !== "/search" ? (
                                     <div className="d-flex flex-column justify-content-between align-items-center">
-                                        {error ? (
-                                            <p style={{textAlign: "center", fontWeight: "bold", fontSize: "40px"}}>
-                                                There is no ads found from the filter! Filter again...
-                                            </p>
-                                        ) : (
-                                            <p style={{textAlign: "center", fontWeight: "bold", fontSize: "40px"}}>
-                                                Still no ads have been added!
-                                            </p>
-                                        )}
+                                        <p style={{textAlign: "center", fontWeight: "bold", fontSize: "40px"}}>
+                                            Still no ads have been added!
+                                        </p>
 
-                                        {error === false && JWT && (
+                                        {JWT && (
                                             <div className="container d-flex justify-content-center">
                                                 <Link to={"/add"}>
                                                     <button className="btn btn-success btn-lg">
@@ -480,8 +475,7 @@ function Ads() {
                                 ) : (
                                     <div className="d-flex flex-column justify-content-between align-items-center">
                                         <p style={{textAlign: "center", fontWeight: "bold", fontSize: "40px"}}>
-                                            Nothing found try search again...
-                                            You can search by Username or Clothing Name
+                                            You can search by Username or Clothing Name. Try again. Redirecting...
                                         </p>
 
                                     </div>
@@ -494,6 +488,21 @@ function Ads() {
                 )
                 }
             </div>
+
+            {showNotFoundPopup && (
+                <div className="modal fade show" style={{display: 'block', backgroundColor: 'rgba(0,0,0,0.5)'}}>
+                    <div className="modal-dialog modal-dialog-centered">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title">Nothing Found</h5>
+                            </div>
+                            <div className="modal-body">
+                                <p>There is no Ads with that options. Try Filter again!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
 
             <Footer/>
         </>

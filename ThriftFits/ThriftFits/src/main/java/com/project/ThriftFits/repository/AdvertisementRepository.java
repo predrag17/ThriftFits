@@ -23,5 +23,5 @@ public interface AdvertisementRepository extends JpaRepository<Advertisement, Lo
 
     List<Advertisement> findAllByOrderByCreatedAtAsc();
 
-    List<Advertisement> findByClothingNameContaining(String searchText);
+    List<Advertisement> findByClothingNameContainingIgnoreCase(String searchText);
 }

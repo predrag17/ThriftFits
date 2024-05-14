@@ -9,6 +9,7 @@ import com.project.ThriftFits.repository.ImageRepository;
 import com.project.ThriftFits.repository.UserRepository;
 import com.project.ThriftFits.service.AdvertisementService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -128,7 +129,7 @@ public class AdvertisementServiceImpl implements AdvertisementService {
             return user.getAdvertisements();
         }
 
-        return advertisementRepository.findByClothingNameContaining(searchText);
+        return advertisementRepository.findByClothingNameContainingIgnoreCase(searchText);
     }
 
     @Override
@@ -172,6 +173,7 @@ public class AdvertisementServiceImpl implements AdvertisementService {
 
     private String uploadImage(MultipartFile image, String imageNewName) {
         try {
+            //TODO: Check if the file is not image
             byte[] bytes = image.getBytes();
             Path fileNameAndPath = Paths.get(UPLOAD_DIR, imageNewName);
             Files.write(fileNameAndPath, bytes);

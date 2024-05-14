@@ -2,9 +2,10 @@ package com.project.ThriftFits.web;
 
 
 import com.project.ThriftFits.model.Advertisement;
-import com.project.ThriftFits.model.DTO.AdvertisementDTO;
 import com.project.ThriftFits.service.AdvertisementService;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;

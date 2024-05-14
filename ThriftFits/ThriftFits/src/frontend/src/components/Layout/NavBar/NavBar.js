@@ -18,8 +18,15 @@ function NavBar({parentComponent}) {
         if (storedToken) {
             try {
                 const decodedToken = jwtDecode(storedToken);
-                setUsername(decodedToken.sub);
-                setToken(storedToken);
+                const currentTime = Date.now() / 1000;
+                if (decodedToken.exp < currentTime) {
+                    console.log("Token has expired.");
+                    localStorage.removeItem("JWT");
+                    history("/login");
+                } else {
+                    setUsername(decodedToken.sub);
+                    setToken(storedToken);
+                }
             } catch (error) {
                 console.error("Invalid token:", error.message);
                 localStorage.removeItem("JWT");

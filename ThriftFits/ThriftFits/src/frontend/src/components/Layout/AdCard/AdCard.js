@@ -13,6 +13,7 @@ function AdCard({ad}) {
     const [timeAgo, setTimeAgo] = useState(null);
     const [username, setUsername] = useState(null);
     const history = useNavigate();
+    const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
 
     useEffect(() => {
         const JWT = localStorage.getItem("JWT");
@@ -65,10 +66,15 @@ function AdCard({ad}) {
         event.stopPropagation();
         event.preventDefault();
 
+        setShowDeleteConfirmation(true);
+    }
+
+    const confirmDelete = () => {
         Service.deleteAdById(ad.id)
             .then(() => {
                 setImageUrl(null);
-                history("/success");
+                setShowDeleteConfirmation(false);
+                history("/myAds");
             })
             .catch(error => {
                 console.error(error);
@@ -82,10 +88,10 @@ function AdCard({ad}) {
     return (
         <>
             <div className="card" id="adCard"
-                 style={{ width: '18rem', height: '100%', display: 'flex', flexDirection: 'column' }}>
+                 style={{width: '18rem', height: '100%', display: 'flex', flexDirection: 'column'}}>
                 <div style={{height: '100%', display: 'flex', flexDirection: 'column'}}>
                     {imageUrl && (
-                        <div style={{height: "90%", maxHeight: "160px", overflow: "hidden" }}>
+                        <div style={{height: "90%", maxHeight: "160px", overflow: "hidden"}}>
                             <img
                                 className="card-img-top"
                                 src={imageUrl}
@@ -155,6 +161,25 @@ function AdCard({ad}) {
                     </div>
                 </div>
             </div>
+
+            {showDeleteConfirmation && (
+                <div className="modal fade show" style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }}>
+                    <div className="modal-dialog modal-dialog-centered">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title">Confirmation</h5>
+                            </div>
+                            <div className="modal-body">
+                                <p>Are you sure you want to delete this ad?</p>
+                            </div>
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-secondary" onClick={() => setShowDeleteConfirmation(false)}>Cancel</button>
+                                <button type="button" className="btn btn-danger" onClick={confirmDelete}>Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </>
 
     )

@@ -1,7 +1,6 @@
 package com.project.ThriftFits.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.project.ThriftFits.model.enumeration.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -80,6 +79,7 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 
 
 }

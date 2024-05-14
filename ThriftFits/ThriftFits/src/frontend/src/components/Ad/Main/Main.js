@@ -32,7 +32,7 @@ function Main() {
             reader.readAsDataURL(file);
             setFormData({
                 ...formData,
-                image: file // Set image file
+                image: file
             });
         } else
             setImageSrc(null);
@@ -62,9 +62,7 @@ function Main() {
         }
 
         Service.addAd(formDataToSend)
-            .then(response => {
-                console.log("Successfully added Ad: ", response.data);
-
+            .then(() => {
                 history("/myAds")
             })
             .catch(error => {
