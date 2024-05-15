@@ -59,7 +59,7 @@ public class AdvertisementController {
             @RequestParam("clothingColor") String clothingColor,
             @RequestParam(value = "description") String description,
             @RequestParam("image") MultipartFile image
-    ) {
+    ) throws IOException {
         return ResponseEntity.ok(advertisementService.updateAd(
                 id,
                 clothingName,

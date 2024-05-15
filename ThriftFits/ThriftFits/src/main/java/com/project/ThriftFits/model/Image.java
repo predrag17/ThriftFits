@@ -19,5 +19,7 @@ public class Image {
     private Long id;
 
     private String name;
-    private String path;
+
+    @Column(length = 100000000)
+    private String base;
 }

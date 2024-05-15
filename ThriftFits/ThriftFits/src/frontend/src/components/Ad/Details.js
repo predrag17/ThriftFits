@@ -26,8 +26,7 @@ function Details() {
             .then(response => {
                 Service.fetchImageById(response.data.image.id)
                     .then(response => {
-                        const url = URL.createObjectURL(response.data);
-                        setImageUrl(url);
+                        setImageUrl(`data:image/png;base64,${response.data}`);
                     })
                     .catch(error => {
                         console.log(error);

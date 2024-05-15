@@ -4,6 +4,7 @@ import com.project.ThriftFits.model.Advertisement;
 import com.project.ThriftFits.model.Image;
 import com.project.ThriftFits.model.User;
 import com.project.ThriftFits.model.exceptions.InvalidAdIdException;
+import com.project.ThriftFits.model.exceptions.InvalidFileException;
 import com.project.ThriftFits.repository.AdvertisementRepository;
 import com.project.ThriftFits.repository.ImageRepository;
 import com.project.ThriftFits.repository.UserRepository;
@@ -16,11 +17,13 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.print.attribute.standard.Media;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
+import java.util.Base64;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -53,7 +56,7 @@ public class AdvertisementServiceImpl implements AdvertisementService {
             String clothingColor,
             String description,
             MultipartFile image
-    ) {
+    ) throws IOException {
         Advertisement advertisement = getAdById(id);
 
         advertisement.setClothingName(clothingName);
@@ -64,10 +67,12 @@ public class AdvertisementServiceImpl implements AdvertisementService {
         advertisement.setDescription(description);
 
         String imageNewName = saveNameAsPng(image);
-        String path = uploadImage(image, imageNewName);
+        byte[] imageData = image.getBytes();
+        String base64Image = Base64.getEncoder().encodeToString(imageData);
 
         advertisement.getImage().setName(imageNewName);
-        advertisement.getImage().setPath(path);
+        advertisement.getImage().setBase(base64Image);
+
 
         return advertisementRepository.save(advertisement);
     }
@@ -147,11 +152,14 @@ public class AdvertisementServiceImpl implements AdvertisementService {
         User user = (User) userDetailsService.loadUserByUsername(username);
 
         String imageNewName = saveNameAsPng(image);
-        String path = uploadImage(image, imageNewName);
+        byte[] imageData = image.getBytes();
+        String base64Image = Base64.getEncoder().encodeToString(imageData);
 
         Image img = new Image();
         img.setName(imageNewName);
-        img.setPath(path);
+        img.setBase(base64Image);
+
+        img = imageRepository.save(img);
 
         Advertisement advertisement = new Advertisement(
                 clothingName,
@@ -171,21 +179,11 @@ public class AdvertisementServiceImpl implements AdvertisementService {
         return advertisement;
     }
 
-    private String uploadImage(MultipartFile image, String imageNewName) {
-        try {
-            //TODO: Check if the file is not image
-            byte[] bytes = image.getBytes();
-            Path fileNameAndPath = Paths.get(UPLOAD_DIR, imageNewName);
-            Files.write(fileNameAndPath, bytes);
-            return fileNameAndPath.toString();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+    private String saveNameAsPng(MultipartFile image) {
+        if (List.of(MediaType.IMAGE_JPEG, MediaType.IMAGE_PNG).equals(image.getContentType())) {
+            throw new InvalidFileException();
         }
 
-
-    }
-
-    private String saveNameAsPng(MultipartFile image) {
         if (image.getContentType().equals(".png")) {
             return image.getOriginalFilename();
         }

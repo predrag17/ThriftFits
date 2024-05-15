@@ -27,7 +27,7 @@ const Service = {
     },
 
     fetchImageById: (id) => {
-        return axios.get(`/img/${id}/details`, {responseType: 'blob'});
+        return axios.get(`/img/${id}/details`);
     },
 
     fetchNewestAds: () => {

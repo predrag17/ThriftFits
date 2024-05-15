@@ -12,7 +12,7 @@ public interface AdvertisementService {
 
     Advertisement getAdById(Long id);
 
-    Advertisement updateAd(Long id, String clothingName, String clothingBrand, String clothingType, String clothingSize, String clothingColor, String description, MultipartFile image);
+    Advertisement updateAd(Long id, String clothingName, String clothingBrand, String clothingType, String clothingSize, String clothingColor, String description, MultipartFile image) throws IOException;
 
     void deleteAd(Long id);
 

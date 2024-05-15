@@ -20,6 +20,7 @@ function MainRegister() {
         phone: false
     });
     const [error, setError] = useState("");
+    const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
     const handleFocus = (field) => {
         setShowNotification({
@@ -44,12 +45,15 @@ function MainRegister() {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log(formData)
         Service.registerUser(formData)
-            .then(response => {
-                console.log("User successfully registered: ", response)
+            .then(() => {
+                console.log("User successfully registered")
+                setShowSuccessPopup(true);
 
-                history("/login");
+                setTimeout(() => {
+                    setShowSuccessPopup(false);
+                    history("/login");
+                }, 3000)
             })
             .catch(error => {
                 console.error("Error: ", error);
@@ -256,6 +260,21 @@ function MainRegister() {
 
                 </div>
             </div>
+
+            {showSuccessPopup && (
+                <div className="modal fade show" style={{display: 'block', backgroundColor: 'rgba(0,0,0,0.5)'}}>
+                    <div className="modal-dialog modal-dialog-centered">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title">Success!</h5>
+                            </div>
+                            <div className="modal-body">
+                                <p>You have successfully registered. Redirecting to login...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }

@@ -28,7 +28,7 @@ function MainLogin() {
             .then(response => {
                 localStorage.setItem("JWT", response.data.token)
 
-                history("/home")
+                history("/home", {state: {fromLogin: true} });
             })
             .catch(() => {
                 setError("Invalid username or password")

@@ -8,6 +8,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+
 @RequiredArgsConstructor
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -17,15 +19,12 @@ public class ImageController {
     private final ImageService imageService;
 
     @GetMapping("{id}/details")
-    public ResponseEntity<Resource> getImageById(@PathVariable Long id) {
-        Resource resource = imageService.getImageById(id);
+    public ResponseEntity<String> getImageById(@PathVariable Long id) throws IOException {
+        String base = imageService.getImageById(id);
 
-        if (!resource.exists()) {
-            return ResponseEntity.notFound().build();
-        }
 
         return ResponseEntity.ok()
                 .contentType(MediaType.IMAGE_PNG)
-                .body(resource);
+                .body(base);
     }
 }
