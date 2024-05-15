@@ -19,6 +19,9 @@ function Main() {
         description: '',
         image: null
     })
+    const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+    const [showErrorPopup, setShowErrorPopup] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const handleFileSelect = (event) => {
         const file = event.target.files[0];
@@ -61,12 +64,26 @@ function Main() {
             formDataToSend.append(key, formData[key]);
         }
 
+        setLoading(true);
+
         Service.addAd(formDataToSend)
             .then(() => {
-                history("/myAds")
+                setLoading(false);
+                setShowSuccessPopup(true);
+
+                setTimeout(() => {
+                    setShowSuccessPopup(false);
+                    history("/myAds");
+                }, 3000)
             })
             .catch(error => {
                 console.error("Error: ", error);
+                setLoading(false);
+                setShowErrorPopup(true);
+
+                setTimeout(() => {
+                    setShowErrorPopup(false);
+                }, 3000)
             })
     }
 
@@ -303,6 +320,52 @@ function Main() {
 
                 </form>
             </div>
+
+            {loading && (
+                <div className="modal fade show" style={{display: 'block', backgroundColor: 'rgba(0,0,0,0.5)'}}>
+                    <div className="modal-dialog modal-dialog-centered">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title">Loading!</h5>
+                            </div>
+                            <div className="modal-body">
+                                <p>Wait for your Ad to be added!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {showSuccessPopup && (
+                <div className="modal fade show" style={{display: 'block', backgroundColor: 'rgba(0,0,0,0.5)'}}>
+                    <div className="modal-dialog modal-dialog-centered">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title">Success!</h5>
+                            </div>
+                            <div className="modal-body">
+                                <p>Successfully added Ad. Redirecting...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {showErrorPopup && (
+                <div className="modal fade show" style={{display: 'block', backgroundColor: 'rgba(0,0,0,0.5)'}}>
+                    <div className="modal-dialog modal-dialog-centered">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title">Error!</h5>
+                            </div>
+                            <div className="modal-body">
+                                <p>There was an error adding your Ad. Try stopping your adblocker!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
         </div>
     )
 }
