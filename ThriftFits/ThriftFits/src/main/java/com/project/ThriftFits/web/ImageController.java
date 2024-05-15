@@ -1,9 +1,7 @@
 package com.project.ThriftFits.web;
 
-import com.project.ThriftFits.model.Image;
 import com.project.ThriftFits.service.ImageService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +10,8 @@ import java.io.IOException;
 
 @RequiredArgsConstructor
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000",
+        "http://thrift-fits-app.s3-website.eu-central-1.amazonaws.com/"})
 @RequestMapping("/api/img")
 public class ImageController {
 

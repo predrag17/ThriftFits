@@ -31,7 +31,7 @@ const Service = {
     },
 
     fetchNewestAds: () => {
-        return axios.get("http://localhost:8080/api/ads/newest");
+        return axios.get("http://thrift-fits.eu-central-1.elasticbeanstalk.com/api/ads/newest");
     },
 
     deleteAdById: (id) => {

@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000",
+        "http://thrift-fits-app.s3-website.eu-central-1.amazonaws.com/"})
 @RestController
 @RequestMapping("/api/user")
 public class UserController {

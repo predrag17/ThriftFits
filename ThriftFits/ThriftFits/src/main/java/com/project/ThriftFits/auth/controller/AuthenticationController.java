@@ -9,7 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin("http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000",
+        "http://thrift-fits-app.s3-website.eu-central-1.amazonaws.com/"})
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
 public class AuthenticationController {

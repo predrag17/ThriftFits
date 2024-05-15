@@ -4,8 +4,6 @@ package com.project.ThriftFits.web;
 import com.project.ThriftFits.model.Advertisement;
 import com.project.ThriftFits.service.AdvertisementService;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
-import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,7 +12,8 @@ import java.io.IOException;
 import java.util.List;
 
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {"http://localhost:3000",
+        "http://thrift-fits-app.s3-website.eu-central-1.amazonaws.com/"})
 @RestController
 @RequestMapping("/api/ads")
 public class AdvertisementController {
