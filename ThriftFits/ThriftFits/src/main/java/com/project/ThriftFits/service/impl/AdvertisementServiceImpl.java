@@ -17,11 +17,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.print.attribute.standard.Media;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.List;
@@ -34,7 +30,6 @@ public class AdvertisementServiceImpl implements AdvertisementService {
     private final UserDetailsService userDetailsService;
     private final UserRepository userRepository;
     private final ImageRepository imageRepository;
-    private static final String UPLOAD_DIR = "src/main/resources/static/images/";
 
     @Override
     public List<Advertisement> getAllAds() {
