@@ -2,10 +2,6 @@
 
 Welcome to ThrifFits, your go-to platform for buying and selling second-hand clothing items!
 
-Here is link of the application:
-
-http://thrift-fits-app.s3-website.eu-central-1.amazonaws.com/
-
 ### Overview
 
 ThriftFits is a web application designed to facilitate the buying and selling of pre-owned clothing items. It provides users with a seamless experience to browse, filter, and add their own listings for clothing items they wish to sell. While users cannot make direct purchases through the website, they can easily contact sellers via email, phone or Instagram to negotiate and finalize the transaction. Additionally, at the end of the transaction process, sellers have the opportunity to leave a review for the web application, providing valuable feedback to improve the overall user experience.
